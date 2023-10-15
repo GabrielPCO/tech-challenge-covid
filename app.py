@@ -1,12 +1,9 @@
 # Libs
 
 import pandas as pd
-import numpy as np
 import time
 
 # libs gráficas
-import plotly
-import plotly.express as px
 import matplotlib.pyplot as plt
 
 # Streamlit
