@@ -27,7 +27,7 @@ def read_csv_file(file):
     return pd.read_csv(file)
 
 # Titulo de Página
-st.title('Análise de dados: explorando dados da Pesquisa Nacional por Amostra de Domicílios (PNAD) COVID19 realizada no ano de 2020')
+st.title('Análise de dados: explorando dados da Pesquisa Nacional por Amostra de Domicílios (PNAD) COVID19')
 
 # Código para alinhar imagens expandidas no centro da tela e justificar textos
 st.markdown(
@@ -60,7 +60,7 @@ tab0, tab1, tab2, tab3, tab4 = st.tabs(["🔷Introdução",
 # Separando as Tabs
 with tab0:
     '''
-    ## Explorando dados da Pesquisa Nacional por Amostra de Domicílios COVID19 de 2020
+    ## Explorando dados da Pesquisa Nacional por Amostra de Domicílios COVID19 realizado em 2020
 
     Links importantes:
 
@@ -70,7 +70,7 @@ with tab0:
 
     Links dos integrantes do projeto:
 
-    [github.com/GabrielPCO](https://github.com/GabrielPCO/tech-challenge-ml) - Github Gabriel Oliveira
+    [github.com/GabrielPCO](https://github.com/GabrielPCO/tech-challenge-covid) - Github Gabriel Oliveira
 
     [github.com/jackson-simionato](https://github.com/jackson-simionato) - Github Jackson Simionato
 
@@ -204,7 +204,7 @@ with tab2:
         ## Evolução dos sintomas de covid-19
 
         '''
-        with st.expander("Análise Sintoma 01", expanded=False):
+        with st.expander("Análise Sintoma 01 (clique para expandir/retrair)", expanded=False):
             '''
 
             ## Análise Sintoma 01
@@ -277,7 +277,7 @@ with tab2:
 
         ## Dados da população
         '''
-        with st.expander("Análise População 01", expanded=False):
+        with st.expander("Análise População 01 (clique para expandir/retrair)", expanded=False):
             '''
 
             ### Ditribuição da população da pesquisa por situação
@@ -327,7 +327,7 @@ with tab2:
 
         ## Dados sociais e econômicos
         '''
-        with st.expander("Análise Social 01", expanded=False):
+        with st.expander("Análise Social 01 (clique para expandir/retrair)", expanded=False):
             '''
 
             ### Número de entrevistados em diferentes faixas de aluguel por estado
