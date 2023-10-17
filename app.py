@@ -191,27 +191,33 @@ with tab2:
 
     ## Pesquisa Nacional por Amostra de Domicílios
 
+    Nessa seção, iremos analisar os dados colhidos na PNAD COVID19. Para isso, separamos três tópicos de interesse para nossa análise: sintomas, população e sociedade.
+
+    Além disso, em cada tópico realizaremos questões sobre o tema abordado e responderemos com a análise dos dados. Serão ao total 20 questões avaliadas.
+    
     Como descrito anteriormente, foram obtidos dados de cerca de 193 mil domicílios por mês de pesquisa.
     
     O questionário foi dividido em partes de modo que em nosso trabalho analisaremos alguma das questões em três categorias diferentes, sendo elas: características clínicas dos sintomas, características da população e características econômicas da sociedade. 
     '''
     tab2_01, tab2_02, tab2_03 = st.tabs(["🌡️Sintomas",
-                                         "👥População",
-                                         "🏘️Sociedade"])
+                                         "🌎População",
+                                         "🏡Sociedade"])
     with tab2_01:
         '''
 
         ## Evolução dos sintomas de covid-19
 
         '''
-        with st.expander("Análise Sintoma 01 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 01 (clique para expandir/retrair)", expanded=False):
             '''
 
-            ## Análise Sintoma 01
+            ### Distribuição dos entrevistados pelo Brasil que apresentaram sintomas de covid-19
 
-            Utilizamos os dados de pesquisa dos três meses para avaliar a evolução do sintoma de febre, tosse e dor no peito nos estados brasileiros ao longo do tempo.
+            Questão 01: Como estão distribuidos os entrevistados que apresentaram sintomas de covid-19?
 
-            Questões: 
+            Utilizamos os dados de pesquisa dos três meses para avaliar a evolução do sintoma de febre, tosse e dor no peito nos estados brasileiros ao longo do tempo. Esses sintomas podem indicar a presença da covid-19 no entrevistado em questão.
+
+            Questionário: 
 
             1. Na semana passada teve febre?
 
@@ -222,7 +228,7 @@ with tab2:
             Apenas casos nos quais a resposta foi sim para as três perguntas foram adicionados ao gráfico.
 
             '''
-            if st.button("Programação Sintoma 01", type="secondary"):
+            if st.button("Programação 01", type="secondary"):
                 '''
 
                 ### SQL
@@ -259,7 +265,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico Sintoma 01", type="primary"):
+        if st.button("Carregar Gráfico 01", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_mapa_casos_febre.html"
                 components.iframe(src, width = 700, height = 800, scrolling = False)
@@ -277,17 +283,21 @@ with tab2:
 
         ## Dados da população
         '''
-        with st.expander("Análise População 01 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 02 (clique para expandir/retrair)", expanded=False):
             '''
 
             ### Ditribuição da população da pesquisa por situação
 
+            Questão 02: Como está distribuida a população da pesquisa em questão de situação de domicílio?
+
             Plotamos os dados de domicílio da população de entrevistados nos três meses avaliados, separando entre situação urbana e rural.
 
-            Questão: Situação do domicílio
+            Com esses dados, podemos avaliar se a questão do domicílio pode ter algo a ver com a presença da covid-19.
+
+            Questionário: Situação do domicílio
 
             '''
-            if st.button("Programação População 01", type="secondary"):
+            if st.button("Programação 02", type="secondary"):
                 '''
                 
                 ### SQL
@@ -309,7 +319,7 @@ with tab2:
                 fig_3.show()
                 ```
                 '''
-        if st.button("Carregar Gráfico População 01", type="primary"):
+        if st.button("Carregar Gráfico 02", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_distribuicao_populacao.html"
                 components.iframe(src, width = 700, height = 700, scrolling = False)
@@ -327,17 +337,19 @@ with tab2:
 
         ## Dados sociais e econômicos
         '''
-        with st.expander("Análise Social 01 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 03 (clique para expandir/retrair)", expanded=False):
             '''
 
             ### Número de entrevistados em diferentes faixas de aluguel por estado
 
-            Selecionamos os cinco principais estados por faixa de aluguel dos entrevistados.
+            Questão 03: Como é a distribuição dos entrevistados pelo Brasil, de acordo com diferentes faixas de aluguel?
 
-            Questão: Número da faixa do aluguel pago
+            Selecionamos os cinco principais estados por faixa de aluguel dos entrevistados. Assim, teremos uma noção da distribuição dos entrevistados da PNAD de 2020 de acordo com o local onde vivem, se em regiões mais populares ou mais nobres.
+
+            Questionário: Número da faixa do aluguel pago
 
             '''
-            if st.button("Programação Social 01", type="secondary"):
+            if st.button("Programação 03", type="secondary"):
                 '''
                 
                 ### SQL
@@ -377,7 +389,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico Sociedade 01", type="primary"):
+        if st.button("Carregar 03", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_faixa_aluguel.html"
                 components.iframe(src, width = 700, height = 700, scrolling = False)
@@ -388,7 +400,7 @@ with tab2:
 
             Pelo gráfico, podemos notar que a maioria dos entrevistados que pagam a maior faixa salarial estão na região sudeste e logo em seguida a região sul e centro-oeste.
 
-            Além disso, a maioria dos entrevistados pagam a faixa de 301-600 reais de aluguel, dentro dos quaia a maioria é de Minas Gerais.
+            Além disso, a maioria dos entrevistados pagam a faixa de 301-600 reais de aluguel, dentro dos quais a maioria é de Minas Gerais.
             '''
         st.divider()
 with tab3:
