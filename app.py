@@ -389,7 +389,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar 03", type="primary"):
+        if st.button("Carregar Gráfico 03", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_faixa_aluguel.html"
                 components.iframe(src, width = 700, height = 700, scrolling = False)
