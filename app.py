@@ -215,7 +215,7 @@ with tab2:
 
             Questão 01: Como estão distribuidos os entrevistados que apresentaram sintomas de covid-19?
 
-            Utilizamos os dados de pesquisa dos três meses para avaliar a evolução do sintoma de febre, tosse e dor no peito nos estados brasileiros ao longo do tempo. Esses sintomas podem indicar a presença da covid-19 no entrevistado em questão.
+            Utilizamos os dados de pesquisa dos três meses para avaliar a evolução do sintoma de febre, tosse e dor na cabeça nos estados brasileiros ao longo do tempo. Esses sintomas podem indicar a presença da covid-19 no entrevistado em questão.
 
             Questionário: 
 
@@ -223,7 +223,7 @@ with tab2:
 
             2. Na semana passada teve tosse?
 
-            3. Na semana passada teve dor no peito?
+            3. Na semana passada teve dor na cabeça?
 
             Apenas casos nos quais a resposta foi sim para as três perguntas foram adicionados ao gráfico.
 
@@ -233,13 +233,13 @@ with tab2:
 
                 ### SQL
                 ```sql
-                SELECT mes, uf, b0011, b0012, b0016, COUNT(b0011) AS "febre_tosse_dor_peito"
-                FROM dbo.pnad2020_month
-                WHERE b0011 = '1' AND b0012 = '1' AND b0016 = '1'
+                SELECT v1013, uf, b0011, b0012, b0015, COUNT(b0011) AS "febre_tosse_dor_cabeca"
+                FROM dbo.pnad2020
+                WHERE b0011 = '1' AND b0012 = '1' AND b0015 = '1'
                 GROUP BY
-                mes, uf, b0011, b0012, b0016
+                v1013, uf, b0011, b0012, b0015
                 ORDER BY
-                mes DESC, febre_tosse_dor_peito DESC
+                v1013 DESC, febre_tosse_dor_cabeca DESC
                 ```
 
                 ### Python
@@ -248,11 +248,11 @@ with tab2:
                                            geojson = geo_json_br,
                                            locations='uf',
                                            featureidkey = 'id',
-                                           color = 'febre_tosse_dor_peito',
+                                           color = 'febre_tosse_dor_cabeca',
                                            animation_frame = 'mes',
                                            hover_name = 'uf',
-                                           hover_data = ['febre_tosse_dor_peito'],
-                                           title = 'Casos de febre, tosse e dor no peito no Brasil entre Setembro a Novembro de 2020',
+                                           hover_data = ['febre_tosse_dor_cabeca'],
+                                           title = 'Casos de febre, tosse e dor de cabeça no Brasil entre Setembro a Novembro de 2020',
                                            color_continuous_scale='Viridis',
                                            mapbox_style = 'carto-positron',
                                            center = {'lat':-14.654012, 'lon': -56.289339},
@@ -274,36 +274,125 @@ with tab2:
             
             ## Análise
 
-            Pelo gráfico, podemos notar que houve uma evolução da quantidade de pessoas que afirmaram ter febre, tosse e dor no peito na semana passada a data da pesquisa. De setembro para outubro podemos ver uma evolução maior do sintoma no norte do país. De outubro para novembro a evolução é mais visível no sul e sudoeste.
+            Pelo gráfico, podemos notar que houve uma evolução da quantidade de pessoas que afirmaram ter febre, tosse e dor de cabeça na semana passada a data da pesquisa. Em setembro notamos uma maior concentração de casos no centro-oeste. De setembro para outubro podemos ver uma evolução dos sintomas no sul do país. De outubro para novembro a evolução é mais visível no norte, sudeste e Santa Catarina se mantendo com elevados número de casos.
             
             '''
         st.divider()
+        with st.expander("Questão 02 (clique para expandir/retrair)", expanded=False):
+            '''
+
+            ### Porcentagem de casos por estado
+
+            Questão 02: Qual a proporção de casos de covid-19 em relação ao numero total de entrevistados dos cinco estados mais afetados?
+
+            Utilizamos os dados de pesquisa dos três meses para avaliar a proporção de casos de covid-19 em relação a quantidade de entrevistados nos cinco estados mais afetados.
+
+            Questionário: 
+
+            1. Na semana passada teve febre?
+
+            2. Na semana passada teve tosse?
+
+            3. Na semana passada teve dor na cabeça?
+
+            '''
+            if st.button("Programação 02", type="secondary"):
+                '''
+
+                ### Python
+                ```python
+                fig_04 = go.Figure(
+                    data=go.Bar(
+                        x=df_05_final["uf"].head().values,
+                        y=df_05_final["total"].head().values,
+                        name="Total entrevistados"
+                    )
+                )
+
+                fig_04.add_trace(
+                    go.Scatter(
+                        x=df_05_final["uf"].head().values,
+                        y=df_05_final["porcentagem"].head().values,
+                        yaxis="y2",
+                        name="Porcentagem casos",
+                        mode="text+lines+markers",
+                        texttemplate="%{y}",
+                        textfont=dict(
+                                color="black",
+                                ),
+                        marker=dict(
+                            symbol="circle",
+                            size=50,
+                        ),
+                    )
+                )
+
+                fig_04.update_traces(textfont_size=14)
+
+
+                fig_04.update_layout(
+                    separators=",.",
+                    title_text="Porcentagem de casos de febre, tosse e dor na cabeça dos cinco estados mais afetados", 
+                    title_x=0.5,
+                    title=dict(font=dict(size=14)),
+                    legend=dict(orientation="h"),
+                    yaxis=dict(
+                        title=dict(text="Total de entrevistados"),
+                        side="left",
+                    ),
+                    yaxis2=dict(
+                        title=dict(text="Porcentagem de casos"),
+                        side="right",
+                        overlaying="y",
+                        tickmode="sync",
+                        tickformat= ".2%"
+                    ),
+                )
+                plotly.offline.plot(fig_04, filename = 'br_porcentagem_casos.html', auto_play=False, auto_open=False)
+                fig_04.show()
+                ```
+                '''
+
+        if st.button("Carregar Gráfico 02", type="primary"):
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                src = "https://cryptohub.com.br/DataFrame/br_porcentagem_casos.html"
+                components.iframe(src, width = 700, height = 800, scrolling = False)
+                time.sleep(2)
+            '''
+            
+            ## Análise
+
+            Pelo gráfico, podemos perceber que o estado com maior proporção de casos de covid-19 por número de entrevistados foi Roraima.
+
+            Pela proporcionalidade, podemos notar que esses cinco estados foram os mais afetados pela covid-19 nos meses de setembro, outubro e novembro de 2020.
+            
+            '''
     with tab2_02:
         '''
 
         ## Dados da população
         '''
-        with st.expander("Questão 02 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 03 (clique para expandir/retrair)", expanded=False):
             '''
 
             ### Ditribuição da população da pesquisa por situação
 
-            Questão 02: Como está distribuida a população da pesquisa em questão de situação de domicílio?
+            Questão 03: Como está distribuida a população da pesquisa em questão de situação de domicílio?
 
             Plotamos os dados de domicílio da população de entrevistados nos três meses avaliados, separando entre situação urbana e rural.
 
-            Com esses dados, podemos avaliar se a questão do domicílio pode ter algo a ver com a presença da covid-19.
+            Com esses dados, podemos avaliar se a questão do domicílio pode ter alguma conexão com a presença da covid-19.
 
             Questionário: Situação do domicílio
 
             '''
-            if st.button("Programação 02", type="secondary"):
+            if st.button("Programação 03", type="secondary"):
                 '''
                 
                 ### SQL
                 ```sql
                 SELECT uf, v1022, COUNT(case v1022 when '1' then 1 else null end) AS "urbana", COUNT(case v1022 when '2' then 1 else null end) AS "rural", COUNT(v1022) AS "total"
-                FROM dbo.pnad2020_month
+                FROM dbo.pnad2020
                 GROUP BY
                 uf, v1022
                 ORDER BY
@@ -319,7 +408,7 @@ with tab2:
                 fig_3.show()
                 ```
                 '''
-        if st.button("Carregar Gráfico 02", type="primary"):
+        if st.button("Carregar Gráfico 03", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_distribuicao_populacao.html"
                 components.iframe(src, width = 700, height = 700, scrolling = False)
@@ -337,25 +426,25 @@ with tab2:
 
         ## Dados sociais e econômicos
         '''
-        with st.expander("Questão 03 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 04 (clique para expandir/retrair)", expanded=False):
             '''
 
             ### Número de entrevistados em diferentes faixas de aluguel por estado
 
-            Questão 03: Como é a distribuição dos entrevistados pelo Brasil, de acordo com diferentes faixas de aluguel?
+            Questão 04: Como é a distribuição dos entrevistados pelo Brasil, de acordo com diferentes faixas de aluguel?
 
             Selecionamos os cinco principais estados por faixa de aluguel dos entrevistados. Assim, teremos uma noção da distribuição dos entrevistados da PNAD de 2020 de acordo com o local onde vivem, se em regiões mais populares ou mais nobres.
 
             Questionário: Número da faixa do aluguel pago
 
             '''
-            if st.button("Programação 03", type="secondary"):
+            if st.button("Programação 04", type="secondary"):
                 '''
                 
                 ### SQL
                 ```sql
                 SELECT uf, f0022, COUNT(f0022) AS "faixa_do_aluguel"
-                FROM dbo.pnad2020_month
+                FROM dbo.pnad2020
                 GROUP BY
                 uf, f0022
                 ORDER BY
@@ -389,7 +478,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 03", type="primary"):
+        if st.button("Carregar Gráfico 04", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_faixa_aluguel.html"
                 components.iframe(src, width = 700, height = 700, scrolling = False)
