@@ -389,8 +389,8 @@ with tab2:
 
             Questão 03: Como está a procura por atendimento médico entre os entrevistados com sintomas de COVID-19?
 
-            Nesta análise, o objetivo foi quantificar os entrevistados que procuraram atendimento médico entre os que apresentaram febre, tosse ou perda olfato/paladar e procuraram atendimento médico nos
-            últimos 3 meses.
+            Nesta análise, o objetivo foi quantificar os entrevistados que procuraram atendimento médico entre os que apresentaram febre, tosse ou perda olfato/paladar
+            nos últimos 3 meses.
 
             Questionário: 
 
@@ -405,28 +405,68 @@ with tab2:
             '''
             if st.button("Programação 03", type="secondary"):
                 '''
-
                 ### SQL
                 ```sql
-                SELECT v1013, uf, b0011, b0012, b0015, COUNT(b0011) AS "febre_tosse_dor_cabeca"
-                FROM dbo.pnad2020
-                WHERE b0011 = '1' AND b0012 = '1' AND b0015 = '1'
-                GROUP BY
-                v1013, uf, b0011, b0012, b0015
-                ORDER BY
-                v1013 DESC, febre_tosse_dor_cabeca DESC
+                with check_sintomas as (
+                    SELECT
+                        V1013,
+                        B002,
+                        CASE 
+                        WHEN B0012 = 1 OR B0011 = 1 OR B00111 = 1 THEN 1
+                        ELSE 0
+                        END as sintomas,
+
+                        COUNT (CASE 
+                        WHEN B0012 = 1 OR B0011 = 1 OR B00111 = 1 THEN 1
+                        ELSE 0
+                        END) as count_sintomas
+                    FROM `brave-tea-400210.fase_3_tech_challenge.pnad-covid-19`
+                    GROUP BY V1013, sintomas, B002
+                )
+
+                SELECT
+                    V1013,
+                    sintomas,
+                    B002,
+                    count_sintomas,
+                    ROUND(SUM(count_sintomas)/SUM(count_sintomas) OVER (PARTITION BY V1013),4) AS proportion
+                FROM check_sintomas
+                WHERE sintomas = 1 AND B002 != 9
+                GROUP BY V1013, sintomas,B002, count_sintomas
+                ORDER BY V1013
                 ```
+                '''
+        if st.button("Carregar Gráfico 03", type="primary"):
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                src = "grafico_atendimento"
+                components.iframe(src, width = 700, height = 800, scrolling = False)
+                time.sleep(2)
+            '''
+            
+            ## Análise
+
+            Percebe-se que de Setembro/2020 até Novembro/2020 houve uma pequena variação no número de entrevistados que tiveram algum dos sintomas clássicos da COVID-19 (febre, tosse e perda de olfato/paladar).
+
+            Em setembro cerca de 7,500 entrevistados tiveram algum sintoma, já em novembro esse valor foi de aproximadamente 7,000 entrevistados.
+            Entretanto, proporcionalmente, mais entrevistados procuraram atendimento médico nos meses de outubro e novembro. 
+            
+            Uma hipótese, com viés otimista, é que as pessoas estão mais conscientes dos perigos da doença e por isso estão buscando tratamento.
+            
+            Outra alternativa, com olhar mais pessimista, é que os casos de COVID-19 ocorridos em outubro e novembro foram mais graves e demandaram
+            mais estrutura hospitalar.
+
+            '''
     with tab2_02:
         '''
 
         ## Dados da população
         '''
-        with st.expander("Questão 03 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 04 (clique para expandir/retrair)", expanded=False):
             '''
 
             ### Ditribuição da população da pesquisa por situação
 
-            Questão 03: Como está distribuida a população da pesquisa em questão de situação de domicílio?
+            Questão 04: Como está distribuida a população da pesquisa em questão de situação de domicílio?
 
             Plotamos os dados de domicílio da população de entrevistados nos três meses avaliados, separando entre situação urbana e rural.
 
@@ -435,7 +475,7 @@ with tab2:
             Questionário: Situação do domicílio
 
             '''
-            if st.button("Programação 03", type="secondary"):
+            if st.button("Programação 04", type="secondary"):
                 '''
                 
                 ### SQL
@@ -457,7 +497,7 @@ with tab2:
                 fig_3.show()
                 ```
                 '''
-        if st.button("Carregar Gráfico 03", type="primary"):
+        if st.button("Carregar Gráfico 04", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_distribuicao_populacao.html"
                 components.iframe(src, width = 700, height = 700, scrolling = False)
@@ -475,19 +515,19 @@ with tab2:
 
         ## Dados sociais e econômicos
         '''
-        with st.expander("Questão 04 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 05 (clique para expandir/retrair)", expanded=False):
             '''
 
             ### Número de entrevistados em diferentes faixas de aluguel por estado
 
-            Questão 04: Como é a distribuição dos entrevistados pelo Brasil, de acordo com diferentes faixas de aluguel?
+            Questão 05: Como é a distribuição dos entrevistados pelo Brasil, de acordo com diferentes faixas de aluguel?
 
             Selecionamos os cinco principais estados por faixa de aluguel dos entrevistados. Assim, teremos uma noção da distribuição dos entrevistados da PNAD de 2020 de acordo com o local onde vivem, se em regiões mais populares ou mais nobres.
 
             Questionário: Número da faixa do aluguel pago
 
             '''
-            if st.button("Programação 04", type="secondary"):
+            if st.button("Programação 05", type="secondary"):
                 '''
                 
                 ### SQL
@@ -527,7 +567,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 04", type="primary"):
+        if st.button("Carregar Gráfico 05", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_faixa_aluguel.html"
                 components.iframe(src, width = 700, height = 700, scrolling = False)
