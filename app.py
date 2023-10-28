@@ -90,14 +90,28 @@ with tab0:
 
     A coleta da PNAD COVID19 teve início em 4 de maio de 2020, com entrevistas realizadas por telefone em, aproximadamente, 48 mil domicílios por semana, totalizando cerca de 193 mil domicílios por mês, em todo o Território Nacional. A amostra é fixa, ou seja, os domicílios entrevistados no primeiro mês de coleta de dados permanecerão na amostra nos meses subsequentes, até o fim da pesquisa.
 
-    O questionário se divide em duas partes, sendo uma direcionada a questões de saúde, especificamente sobre sintomas associados à síndrome gripal e outra, a questões de trabalho. Nas questões de saúde, investiga-se a ocorrência de alguns dos principais sintomas da COVID19 no período de referência da pesquisa, considerando-se todos os moradores do domicílio. Para aqueles que apresentaram algum sintoma, perguntam-se quais as providências tomadas para alivio dos sintomas; se buscaram por atendimento médico devido a esses sintomas; e o tipo de estabelecimento de saúde procurado. Nas questões de trabalho, busca-se classificar a população em idade de trabalhar nas seguintes categorias: ocupados, desocupados e pessoas fora da força de trabalho. Investiga-se, ainda, os seguintes aspectos: ocupação e atividade; afastamento do trabalho e o motivo do afastamento; exercício de trabalho remoto; busca por trabalho; motivo por não ter procurado trabalho; horas semanais efetivamente e habitualmente trabalhadas; assim como o rendimento efetivo e habitual do trabalho. Por fim, visando compor o rendimento domiciliar, pergunta-se se algum morador recebeu outros rendimentos não oriundos do trabalho, tais como: aposentadoria, BPC-LOAS, Bolsa Família, algum auxílio emergencial relacionado à COVID, seguro desemprego, aluguel e outros. Cabe ressaltar que a PNAD COVID19 é uma pesquisa com instrumento dinâmico de coleta das informações; portanto, o questionário está sujeito a alterações ao longo do período de sua aplicação.
+    O questionário se divide em duas partes, sendo uma direcionada a questões de saúde, especificamente sobre sintomas associados à síndrome gripal e outra, a questões de trabalho. 
+    Nas questões de saúde, investiga-se a ocorrência de alguns dos principais sintomas da COVID19 no período de referência da pesquisa, considerando-se todos os moradores do domicílio. 
+    
+    Para aqueles que apresentaram algum sintoma, perguntam-se quais as providências tomadas para alivio dos sintomas; se buscaram por atendimento médico devido a esses sintomas; e o tipo de estabelecimento de saúde procurado.
+    
+    Nas questões de trabalho, busca-se classificar a população em idade de trabalhar nas seguintes categorias: ocupados, desocupados e pessoas fora da força de trabalho.
+    Investiga-se, ainda, os seguintes aspectos: ocupação e atividade; afastamento do trabalho e o motivo do afastamento; exercício de trabalho remoto; busca por trabalho; motivo por não ter procurado trabalho; horas semanais efetivamente e habitualmente trabalhadas; assim como o rendimento efetivo e habitual do trabalho.
+    
+    Por fim, visando compor o rendimento domiciliar, pergunta-se se algum morador recebeu outros rendimentos não oriundos do trabalho, tais como: aposentadoria, BPC-LOAS, Bolsa Família, algum auxílio emergencial relacionado à COVID, seguro desemprego, aluguel e outros. Cabe ressaltar que a PNAD COVID19 é uma pesquisa com instrumento dinâmico de coleta das informações; portanto, o questionário está sujeito a alterações ao longo do período de sua aplicação.
 
     A pesquisa prevê divulgações semanais para alguns indicadores, em nível Brasil, e divulgações mensais para um conjunto mais amplo de indicadores, por Unidades da Federação.
 
     Os resultados da PNAD COVID19 são pioneiros no sentido de constituírem a primeira divulgação de Estatísticas Experimentais elaboradas pelo IBGE, as quais estão alinhadas com a estratégia de modernização do Instituto e permitem a ampliação das ofertas de informação para atender às necessidades de seus usuários.
-    
-    
+    '''
+    st.divider()
+    '''
+    ## Objetivo do trabalho
+
     Neste documento iremos analisar dados da PNAD COVID19 realizada no ano de 2020 a fim de compreender melhor como foi o comportamento da população na época da pandemia.
+
+    Para isso, serão aplicados os conceitos e técnicas associados à análise exploratória de dados,
+    visualização e storytelling de dados, além do uso de banco de dados (local e cloud) para manipulação de dados muito grandes (Big Data).
 
     Os tópicos foram divididos em três categorias principais: base de dados, pesquisa e conclusões. Cada categoria será tratada e mais aprofundada em sua respectiva aba dentro desse documento.
     '''
@@ -193,11 +207,11 @@ with tab2:
 
     Nessa seção, iremos analisar os dados colhidos na PNAD COVID19. Para isso, separamos três tópicos de interesse para nossa análise: sintomas, população e sociedade.
 
-    Além disso, em cada tópico realizaremos questões sobre o tema abordado e responderemos com a análise dos dados. Serão ao total 20 questões avaliadas.
+    Em cada tópico serão realizadas análises sobre o tema abordado, com o objetivo de descrever o comportamento e contexto da população brasileira durante a pandemia.
     
-    Como descrito anteriormente, foram obtidos dados de cerca de 193 mil domicílios por mês de pesquisa.
+    Os dados do PNAD abrangeram cerca de 193 mil domicílios por mês de pesquisa e um total de mais de 1 milhão de entrevistados.
     
-    O questionário foi dividido em partes de modo que em nosso trabalho analisaremos alguma das questões em três categorias diferentes, sendo elas: características clínicas dos sintomas, características da população e características econômicas da sociedade. 
+    A análise será separada em três categorias diferentes, sendo elas: características clínicas dos sintomas, características da população e características econômicas da sociedade. 
     '''
     tab2_01, tab2_02, tab2_03 = st.tabs(["🌡️Sintomas",
                                          "🌎População",
@@ -367,6 +381,41 @@ with tab2:
             Pela proporcionalidade, podemos notar que esses cinco estados foram os mais afetados pela covid-19 nos meses de setembro, outubro e novembro de 2020.
             
             '''
+        st.divider()
+        with st.expander("Questão 03 (clique para expandir/retrair)", expanded=False):
+            '''
+
+            ### Procura de atendimento médico por entrevistados sintomáticos
+
+            Questão 03: Como está a procura por atendimento médico entre os entrevistados com sintomas de COVID-19?
+
+            Nesta análise, o objetivo foi quantificar os entrevistados que procuraram atendimento médico entre os que apresentaram febre, tosse ou perda olfato/paladar e procuraram atendimento médico nos
+            últimos 3 meses.
+
+            Questionário: 
+
+            1. Na semana passada teve febre?
+
+            2. Na semana passada teve tosse?
+
+            3. Na semana passada teve perda de olfato/paladar?
+
+            4. Por causa disso, foi a algum estabelecimento de saúde?
+
+            '''
+            if st.button("Programação 03", type="secondary"):
+                '''
+
+                ### SQL
+                ```sql
+                SELECT v1013, uf, b0011, b0012, b0015, COUNT(b0011) AS "febre_tosse_dor_cabeca"
+                FROM dbo.pnad2020
+                WHERE b0011 = '1' AND b0012 = '1' AND b0015 = '1'
+                GROUP BY
+                v1013, uf, b0011, b0012, b0015
+                ORDER BY
+                v1013 DESC, febre_tosse_dor_cabeca DESC
+                ```
     with tab2_02:
         '''
 
