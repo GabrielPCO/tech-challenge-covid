@@ -209,7 +209,7 @@ with tab2:
 
     Em cada tópico serão realizadas análises sobre o tema abordado, com o objetivo de descrever o comportamento e contexto da população brasileira durante a pandemia.
     
-    Os dados do PNAD abrangeram cerca de 193 mil domicílios por mês de pesquisa e um total de mais de 1 milhão de entrevistados.
+    Os dados do PNAD abrangeram cerca de 193 mil domicílios por mês de pesquisa e um total de mais de 1 milhão de registros na base de dados abrangendo três mese.
     
     A análise será separada em três categorias diferentes, sendo elas: características clínicas dos sintomas, características da população e características econômicas da sociedade. 
     '''
@@ -447,15 +447,98 @@ with tab2:
 
             Percebe-se que de Setembro/2020 até Novembro/2020 houve uma pequena variação no número de entrevistados que tiveram algum dos sintomas clássicos da COVID-19 (febre, tosse e perda de olfato/paladar).
 
-            Em setembro cerca de 7,500 entrevistados tiveram algum sintoma, já em novembro esse valor foi de aproximadamente 7,000 entrevistados.
-            Entretanto, proporcionalmente, mais entrevistados procuraram atendimento médico nos meses de outubro e novembro. 
+            Em setembro cerca de 7,500 entrevistados tiveram algum sintoma, já em novembro esse valor foi de aproximadamente 7,000 entrevistados. Isso representa que, aproximadamente 2% da população de entrevistada
+            apresentou algum dos sintomas mais comuns de COVID-19.
+
+            Proporcionalmente, mais entrevistados procuraram atendimento médico nos meses de outubro e novembro do que em setembro. 
             
             Uma hipótese, com viés otimista, é que as pessoas estão mais conscientes dos perigos da doença e por isso estão buscando tratamento.
             
             Outra alternativa, com olhar mais pessimista, é que os casos de COVID-19 ocorridos em outubro e novembro foram mais graves e demandaram
             mais estrutura hospitalar.
-
             '''
+        st.divider()
+        with st.expander("Questão 04 - sintomas (clique para expandir/retrair)", expanded=False):
+            '''
+            ### Número de ebtrevistados internados por tipo de sintoma
+
+            Questão 04: Entre os sintomais mais sintomas frequentes de COVID-19, qual está mais relacionado com a ocorrência de internações?
+
+            A capacidade dos sistemas de saúde, tanto públicos como privados, é um fator extremamente importante em uma pandemia, pois em picos de infecção da população pode haver falta
+            de leitos e pacientes podem não receber o devido atendimento.
+
+            Neste sentido, a Questão 04 busca entender a relação entre os sintomas e as ocorrências de internação entre a população da pesquisa, para que hospitais possam priorizar esforços
+            em casos com sintomas mais graves.
+
+            Questionário: 
+
+            1. Na semana passada teve febre?
+
+            2. Na semana passada teve tosse?
+
+            3. Na semana passada teve perda de olfato/paladar?
+
+            4. Ao procurar o hospital, teve que ficar internado por um dia ou mais?
+            
+            '''
+            if st.button("Programação 04 - sintomas", type="secondary"):
+                '''
+                **Obs:** este processamento foi realizado utilizando Python + Google Big Query
+
+                ```python
+                sintomas = ['B0011','B0012','B00111']
+
+                for sintoma in sintomas:
+                    query_sql = f"""
+                        SELECT
+                            {sintoma},
+                            B005,
+                            COUNT (B005) as n_entrevistados
+                        FROM
+                            `brave-tea-400210.fase_3_tech_challenge.pnad-covid-19`
+                        WHERE
+                            {sintoma} = 1 AND B005 != 0 AND B005 != 9
+                        GROUP BY
+                            {sintoma}, B005
+                        ORDER BY 
+                            B005
+                    """
+
+                    query_job = client.query(query_sql)
+                    df_results = query_job.to_dataframe()
+
+                    df_results.rename(columns={f'{sintoma}':'sintoma'}, inplace=True)
+                    df_results['sintoma'] = sintoma
+
+                    if(sintomas.index(sintoma) == 0):
+                        final_df = df_results.copy()
+                    else:
+                        final_df = pd.concat([final_df,df_results], axis=0)
+                ```
+                '''
+
+            if st.button("Carregar Gráfico 04 - sintomas", type="primary"):
+                with st.spinner("Carregando o gráfico. Aguarde..."):
+                    src = "grafico_internacao"
+                    components.iframe(src, width = 700, height = 800, scrolling = False)
+                    time.sleep(2)
+                '''
+                
+                ## Análise
+
+                Fica claro ao analisar o gráfico que os sintomas de febre e tosse são muito mais frequentes na população da pesquisa, e possuem valores bem próximos de cerca de 3,000 pacientes cada
+                entre internados e não internados. Enquanto isso, cerca de 1,400 entrevistados informaram ter sofrido com perda de olfato/paladar, possivelmente um número menor tanto por ser um sintoma mais único
+                da COVID-19 como por ser um sintoma mais difícil de ser percebido pelos pacientes.
+
+                Analisando a proporção de pacientes internados por sintoma, o sintoma de febre é também o de maior proporção, com 10.8% dos entrevistados internados, seguido de perda de olfato/paladar com 10.7%
+                e por último tosse com 10.3%.
+
+                É possível relacionar estes valores com a questão anterior, em que foi constatado que aproximadamente 2% da população da pesquisa apresentou algum tipo de sintoma COVID-19 nos três meses da análise.
+                Significa que pouco mais de 0.02% da população acaba necessitando de internação por complicações de febre, tosse ou perda de olfato/paladar. Este número é um bom indicador para hospitais e autoridades,
+                para entender o tamanho da demanda por leitos que pode existir em cada região do país.
+
+                '''
+
     with tab2_02:
         '''
 
