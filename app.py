@@ -460,9 +460,9 @@ with tab2:
         st.divider()
         with st.expander("Questão 04 - sintomas (clique para expandir/retrair)", expanded=False):
             '''
-            ### Número de ebtrevistados internados por tipo de sintoma
+            ### Número de entrevistados internados por tipo de sintoma
 
-            Questão 04: Entre os sintomais mais sintomas frequentes de COVID-19, qual está mais relacionado com a ocorrência de internações?
+            **Questão 04:** Entre os sintomais mais sintomas frequentes de COVID-19, qual está mais relacionado com internações?
 
             A capacidade dos sistemas de saúde, tanto públicos como privados, é um fator extremamente importante em uma pandemia, pois em picos de infecção da população pode haver falta
             de leitos e pacientes podem não receber o devido atendimento.
@@ -517,11 +517,11 @@ with tab2:
                 ```
                 '''
 
-            if st.button("Carregar Gráfico 04 - sintomas", type="primary"):
-                with st.spinner("Carregando o gráfico. Aguarde..."):
-                    src = "grafico_internacao"
-                    components.iframe(src, width = 700, height = 800, scrolling = False)
-                    time.sleep(2)
+        if st.button("Carregar Gráfico 04 - sintomas", type="primary"):
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                src = "grafico_internacao"
+                components.iframe(src, width = 700, height = 800, scrolling = False)
+                time.sleep(2)
                 '''
                 
                 ## Análise
@@ -589,10 +589,86 @@ with tab2:
             
             ## Análise
 
-            Pelo gráfico, podemos notar que a maioria dos entrevistados está em situação de domicílio urbano, sendo a maioria dos estados de Minas Gerais, São Paulo e Rio de Janeiro.
+            Como esperado, a maioria dos entrevistados mora em zona urbana, sendo São Paulo, Minas Gerais e Rio de Janeiro os três estados com maior número de entrevistados.
+
+            Quanto à proporção de habitantes em zona rural e urbana por estado, destacam-se os estados do Nordeste com número elevado de habitantes em zona rural, enquanto RJ e DF tiveram
+            a grande maioria de seus entrevistados com moradia em área urbana.
+
+            Do ponto de vista da pandemia, esta é uma informação relevante pois zonas urbanas são áreas de maior circulação e concentração de pessoas, o que facilita a propagação de doenças
+            como o COVID-19. Portanto, estados em que a população está mais concentrada em zonas urbanas podem ser mais vulneráveis.
+
+            Por outro lado, zonas rurais possuem menos infraestrutura hospitalar, portanto casos graves ocorridos nessas regiões devem receber atenção especial.
 
             '''
         st.divider()
+        with st.expander("Questão 05 - população (clique para expandir/retrair)", expanded=False):
+            '''
+
+            ### Ditribuição da população por região de moradia
+
+            Questão 04: Como está distribuida a população da pesquisa nas UFs do Brasil quanto à região de moradia?
+
+            Com o objetivo de analisar mais a fundo a questão da distribuição da população no território brasileiro, o gráfico abaixo permite identificar os estados em que a população
+            está altamente concentrada em polos político-econômicos como Capitais e Regiões Metropolitanos.
+
+            Questionário: 
+            
+            1. Tipo de área (capital, região metropolitana, etc.)
+
+            2. UF
+
+            '''
+            if st.button("Programação 05 - população", type="secondary"):
+                '''
+                ### SQL
+
+                ```sql
+                SELECT 
+                    uf,
+                    (CASE
+                        WHEN V1023 = 1 THEN 1
+                        WHEN V1023 = 2 THEN 2
+                        WHEN V1023 = 3 THEN 2
+                        WHEN V1023 = 4 THEN 4
+                    END) as V1023,
+                    COUNT(CASE
+                        WHEN V1023 = 1 THEN 1
+                        WHEN V1023 = 2 THEN 2
+                        WHEN V1023 = 3 THEN 2
+                        WHEN V1023 = 4 THEN 4
+                    END) as V1023
+
+                FROM `brave-tea-400210.fase_3_tech_challenge.pnad-covid-19`
+
+                GROUP BY uf, new_regiao_moradia
+                ORDER BY uf, new_regiao_moradia
+                ```
+
+                ### Python
+
+                ```python
+                fig_3 = px.bar(df_results.sort_values(by=['n_regiao_moradia'], ascending=False), x="uf", y="n_regiao_moradia", color="new_regiao_moradia", title="Distribuição da população da pesquisa por região de moradia<br>PNAD COVID-19",
+                labels=dict(uf="Estado", n_regiao_moradia="Nº de entrevistados", new_regiao_moradia="Região de moradia"))
+                fig_3.update_layout(title_x=0.5, width=1200, height=700, legend_traceorder='reversed')
+                fig_3.show()
+                ```
+                '''
+        if st.button("Carregar Gráfico 05 - populacao", type="primary"):
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                src = "grafico 5 - populacao"
+                components.iframe(src, width = 700, height = 700, scrolling = False)
+                time.sleep(5)
+            
+            '''
+            ## Análise
+
+            Novamente, os dados mostram que o Distrito Federal e o Rio de Janeiro são duas UFs com população altamente concentrada em grandes cidades. Além deles, Goiás, Amazonas e Amapá também tiveram
+            mais da metade de seus entrevistados informando que moram em Capitais ou Regiões Metropolitanas.
+
+            Estas 5 UFs podem estar mais suscetíveis à ocorrência de grandes picos de contaminação, o que consequentemente podem gerar uma grande sobrecarga nos sitemas de saúde público e privado. Por isso, medidas de
+            educação ou de redução de contato social entre os habitantes devem ser ainda mais úteis nesse contexto.
+            '''
+            
     with tab2_03:
         '''
 
@@ -664,6 +740,7 @@ with tab2:
             Além disso, a maioria dos entrevistados pagam a faixa de 301-600 reais de aluguel, dentro dos quais a maioria é de Minas Gerais.
             '''
         st.divider()
+        
 with tab3:
     '''
 
