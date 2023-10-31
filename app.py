@@ -213,21 +213,222 @@ with tab2:
     
     A análise será separada em três categorias diferentes, sendo elas: características clínicas dos sintomas, características da população e características econômicas da sociedade. 
     '''
-    tab2_01, tab2_02, tab2_03 = st.tabs(["🌡️Sintomas",
-                                         "🌎População",
-                                         "🏡Sociedade"])
+    tab2_01, tab2_02, tab2_03 = st.tabs(["🌎População",
+                                         "🏡Sociedade",
+                                         "🌡️Sintomas"])
+    
     with tab2_01:
         '''
 
-        ## Evolução dos sintomas de covid-19
+        ## Caracterizando a população
 
+        ### Ditribuição da população da pesquisa por situação de moradia
         '''
         with st.expander("Questão 01 (clique para expandir/retrair)", expanded=False):
+            '''        
+            **Como está distribuida a população da pesquisa em questão de situação de domicílio?**
+
+            Plotamos os dados de domicílio da população de entrevistados nos três meses avaliados, separando entre situação urbana e rural.
+
+            Com esses dados, podemos avaliar se a questão do domicílio pode ter alguma conexão com a presença da covid-19.
+
+            Questionário: Situação do domicílio
+
+            '''
+            if st.button("Programação 01 - população", type="secondary"):
+                '''
+                
+                ### SQL
+                ```sql
+                SELECT uf, v1022, COUNT(case v1022 when '1' then 1 else null end) AS "urbana", COUNT(case v1022 when '2' then 1 else null end) AS "rural", COUNT(v1022) AS "total"
+                FROM dbo.pnad2020
+                GROUP BY
+                uf, v1022
+                ORDER BY
+                total DESC
+                ```
+
+                ### Python
+                ```python
+                fig_3 = px.bar(df_04_final, x="uf", y="total_por_situacao", color="situacao", title="Ditribuição da população da pesquisa por situação",
+                            labels=dict(uf="Estado", total_por_situacao="Nº de entrevistados", situacao="Situação"))
+                fig_3.update_layout(title_x=0.5)
+                plotly.offline.plot(fig_3, filename = 'br_distribuicao_populacao.html', auto_play=False, auto_open=False)
+                fig_3.show()
+                ```
+                '''
+        if st.button("Carregar Gráfico 01 - população", type="primary"):
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                src = "https://cryptohub.com.br/DataFrame/br_distribuicao_populacao.html"
+                components.iframe(src, width = 700, height = 700, scrolling = False)
+                time.sleep(5)
+            '''
+            
+            ## Análise
+
+            Como esperado, a maioria dos entrevistados mora em zona urbana, sendo São Paulo, Minas Gerais e Rio de Janeiro os três estados com maior número de entrevistados.
+
+            Quanto à proporção de habitantes em zona rural e urbana por estado, destacam-se os estados do Nordeste com número elevado de habitantes em zona rural, enquanto RJ e DF tiveram
+            a grande maioria de seus entrevistados com moradia em área urbana.
+
+            Do ponto de vista da pandemia, esta é uma informação relevante pois zonas urbanas são áreas de maior circulação e concentração de pessoas, o que facilita a propagação de doenças
+            como o COVID-19. Portanto, estados em que a população está mais concentrada em zonas urbanas podem ser mais vulneráveis.
+
+            Por outro lado, zonas rurais possuem menos infraestrutura hospitalar, portanto casos graves ocorridos nessas regiões devem receber atenção especial.
+
+            '''
+        st.divider()
+        '''### Ditribuição da população por região de moradia'''
+        with st.expander("Questão 02 (clique para expandir/retrair)", expanded=False):
+            '''
+            **Como está distribuida a população da pesquisa nas UFs do Brasil quanto à região de moradia?**
+
+            Com o objetivo de analisar mais a fundo a questão da distribuição da população no território brasileiro, o gráfico abaixo permite identificar os estados em que a população
+            está altamente concentrada em polos político-econômicos como Capitais e Regiões Metropolitanas.
+
+            Questionário: 
+            
+            1. Tipo de área (capital, região metropolitana, etc.)
+
+            2. UF
+
+            '''
+            if st.button("Programação 02 - população", type="secondary"):
+                '''
+                ### SQL
+
+                ```sql
+                SELECT 
+                    uf,
+                    (CASE
+                        WHEN V1023 = 1 THEN 1
+                        WHEN V1023 = 2 THEN 2
+                        WHEN V1023 = 3 THEN 2
+                        WHEN V1023 = 4 THEN 4
+                    END) as V1023,
+                    COUNT(CASE
+                        WHEN V1023 = 1 THEN 1
+                        WHEN V1023 = 2 THEN 2
+                        WHEN V1023 = 3 THEN 2
+                        WHEN V1023 = 4 THEN 4
+                    END) as V1023
+
+                FROM `brave-tea-400210.fase_3_tech_challenge.pnad-covid-19`
+
+                GROUP BY uf, new_regiao_moradia
+                ORDER BY uf, new_regiao_moradia
+                ```
+
+                ### Python
+
+                ```python
+                fig_3 = px.bar(df_results.sort_values(by=['n_regiao_moradia'], ascending=False), x="uf", y="n_regiao_moradia", color="new_regiao_moradia", title="Distribuição da população da pesquisa por região de moradia<br>PNAD COVID-19",
+                labels=dict(uf="Estado", n_regiao_moradia="Nº de entrevistados", new_regiao_moradia="Região de moradia"))
+                fig_3.update_layout(title_x=0.5, width=1200, height=700, legend_traceorder='reversed')
+                fig_3.show()
+                ```
+                '''
+        if st.button("Carregar Gráfico 02 - população", type="primary"):
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                src = "grafico 5 - populacao"
+                components.iframe(src, width = 700, height = 700, scrolling = False)
+                time.sleep(5)
+            
+            '''
+            ## Análise
+
+            Novamente, os dados mostram que o Distrito Federal e o Rio de Janeiro são duas UFs com população altamente concentrada em grandes cidades. Além deles, Goiás, Amazonas e Amapá também tiveram
+            mais da metade de seus entrevistados informando que moram em Capitais ou Regiões Metropolitanas.
+
+            Estas 5 UFs podem estar mais suscetíveis à ocorrência de grandes picos de contaminação, o que consequentemente podem gerar uma grande sobrecarga nos sitemas de saúde público e privado. Por isso, medidas de
+            educação ou de redução de contato social entre os habitantes devem ser ainda mais úteis nesse contexto.
             '''
 
-            ### Distribuição dos entrevistados pelo Brasil que apresentaram sintomas de covid-19
+    with tab2_02:
+        '''
 
-            Questão 01: Como estão distribuidos os entrevistados que apresentaram sintomas de covid-19?
+        ## Dados socioeconômicos
+
+        ### Distribuição da população quanto ao valor de aluguel pago
+        '''
+        with st.expander("Questão 03 (clique para expandir/retrair)", expanded=False):
+            '''         
+            **Como estava a distribuição dos entrevistados pelo Brasil de acordo com diferentes faixas de aluguel?**
+
+            Selecionamos os cinco principais estados por faixa de aluguel dos entrevistados. Assim, teremos uma noção da distribuição dos entrevistados da PNAD de 2020 de acordo com o local onde vivem, se em regiões mais populares ou mais nobres.
+
+            Questionário: Número da faixa do aluguel pago
+
+            '''
+            if st.button("Programação 03", type="secondary"):
+                '''
+                
+                ### SQL
+                ```sql
+                SELECT uf, f0022, COUNT(f0022) AS "faixa_do_aluguel"
+                FROM dbo.pnad2020
+                GROUP BY
+                uf, f0022
+                ORDER BY
+                faixa_do_aluguel DESC
+                ```
+
+                ### Python
+                ```python
+                fig_1 = make_subplots(rows=2, cols=2, specs=[[{'type':'domain'}, {'type':'domain'}],[{'type':'domain'}, {'type':'domain'}]])
+                fig_1.add_trace(go.Pie(labels=faixa_01["Estado"], values=faixa_01["Quantidade"], name="301-600"),
+                            1, 1)
+                fig_1.add_trace(go.Pie(labels=faixa_02["Estado"], values=faixa_02["Quantidade"], name="801-1.600"),
+                            1, 2)
+                fig_1.add_trace(go.Pie(labels=faixa_03["Estado"], values=faixa_03["Quantidade"], name="601-800"),
+                            2, 1)
+                fig_1.add_trace(go.Pie(labels=faixa_04["Estado"], values=faixa_04["Quantidade"], name="101-300"),
+                            2, 2)
+
+                # Tamanho do buraco da rosca
+                fig_1.update_traces(hole=0.7, hoverinfo="label+value+percent", textinfo='value')
+
+                fig_1.update_layout(title_text="Número de entrevistados em diferentes faixas de aluguel por estado", title_x=0.5, title=dict(font=dict(size=16)),legend=dict(font=dict(size=14)),
+                                    annotations=[dict(text='301-600<br>Reais', x=0.160, y=0.82, font_size=18, showarrow=False),
+                                                dict(text='801-1.600<br>Reais', x=0.9, y=0.82, font_size=18, showarrow=False),
+                                                dict(text='601-800<br>Reais', x=0.160, y=0.12, font_size=18, showarrow=False),
+                                                dict(text='101-300<br>Reais', x=0.9, y=0.12, font_size=18, showarrow=False)
+                                                ]
+                                    )
+                plotly.offline.plot(fig_1, filename = 'br_faixa_aluguel.html', auto_open=False)
+                fig_1.show()
+                ```
+                '''
+
+        if st.button("Carregar Gráfico 03", type="primary"):
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                src = "https://cryptohub.com.br/DataFrame/br_faixa_aluguel.html"
+                components.iframe(src, width = 700, height = 700, scrolling = False)
+                time.sleep(2)
+            '''
+            
+            ## Análise
+
+            Pelo gráfico, pode-se notar que a maioria dos entrevistados que pagam a maior faixa salarial estão na região Sudeste e Sul do país. 
+            Santa Catarina é um estado a se destacar, pois mesmo com uma população pequena, teve grande número de entrevistados que pagam a faixa de aluguel mais alta,
+            sugerindo que se trata de uma UF mais desenvolvida socioeconomicamente e com custo de vida elevado.
+
+            Além disso, no geral a maioria dos entrevistados pagam de R$301 a R$600 reais de aluguel, entre os quais a maioria é de Minas Gerais. A faixa de valor mais baixa, de R$101 a R$300, possui 4 estados
+            do Nordeste entre as UFs com maior número de entrevistados, ou seja, são estados com população mais carente e que dependem ainda mais da infraestrutura de saúda pública.
+            '''
+        st.divider()
+    
+    with tab2_03:
+        '''
+
+        ## Aspectos clínicos da pandemia COVID-19
+
+        ### Distribuição dos entrevistados pelo Brasil que apresentaram sintomas de covid-19
+
+        '''
+        with st.expander("Questão 04 (clique para expandir/retrair)", expanded=False):
+            '''
+            **Como estão distribuidos os entrevistados que apresentaram sintomas de COVID-19?**
 
             Utilizamos os dados de pesquisa dos três meses para avaliar a evolução do sintoma de febre, tosse e dor na cabeça nos estados brasileiros ao longo do tempo. Esses sintomas podem indicar a presença da covid-19 no entrevistado em questão.
 
@@ -242,7 +443,7 @@ with tab2:
             Apenas casos nos quais a resposta foi sim para as três perguntas foram adicionados ao gráfico.
 
             '''
-            if st.button("Programação 01", type="secondary"):
+            if st.button("Programação 04", type="secondary"):
                 '''
 
                 ### SQL
@@ -279,7 +480,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 01", type="primary"):
+        if st.button("Carregar Gráfico 04", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_mapa_casos_febre.html"
                 components.iframe(src, width = 700, height = 800, scrolling = False)
@@ -288,16 +489,18 @@ with tab2:
             
             ## Análise
 
-            Pelo gráfico, podemos notar que houve uma evolução da quantidade de pessoas que afirmaram ter febre, tosse e dor de cabeça na semana passada a data da pesquisa. Em setembro notamos uma maior concentração de casos no centro-oeste. De setembro para outubro podemos ver uma evolução dos sintomas no sul do país. De outubro para novembro a evolução é mais visível no norte, sudeste e Santa Catarina se mantendo com elevados número de casos.
+            Pelo gráfico, podemos notar que houve uma evolução da quantidade de pessoas que afirmaram ter febre, tosse e dor de cabeça na semana anterior à data da pesquisa. 
+            Em setembro notamos uma maior concentração de casos no Centro-Oeste. De setembro para outubro podemos ver uma evolução dos sintomas no sul do país. 
+            De outubro para novembro a evolução é mais visível no Norte, com a região Sudeste e Santa Catarina se mantendo com elevados número de casos.
             
             '''
         st.divider()
-        with st.expander("Questão 02 (clique para expandir/retrair)", expanded=False):
+        '''
+        ### Porcentagem de casos por estado
+        '''
+        with st.expander("Questão 05 (clique para expandir/retrair)", expanded=False):
             '''
-
-            ### Porcentagem de casos por estado
-
-            Questão 02: Qual a proporção de casos de covid-19 em relação ao numero total de entrevistados dos cinco estados mais afetados?
+            **Qual a proporção de casos de covid-19 em relação ao numero total de entrevistados dos cinco estados mais afetados?**
 
             Utilizamos os dados de pesquisa dos três meses para avaliar a proporção de casos de covid-19 em relação a quantidade de entrevistados nos cinco estados mais afetados.
 
@@ -310,7 +513,7 @@ with tab2:
             3. Na semana passada teve dor na cabeça?
 
             '''
-            if st.button("Programação 02", type="secondary"):
+            if st.button("Programação 05", type="secondary"):
                 '''
 
                 ### Python
@@ -367,7 +570,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 02", type="primary"):
+        if st.button("Carregar Gráfico 05", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_porcentagem_casos.html"
                 components.iframe(src, width = 700, height = 800, scrolling = False)
@@ -382,12 +585,12 @@ with tab2:
             
             '''
         st.divider()
-        with st.expander("Questão 03 (clique para expandir/retrair)", expanded=False):
+        '''
+        ### Procura de atendimento médico por entrevistados sintomáticos
+        '''
+        with st.expander("Questão 06 (clique para expandir/retrair)", expanded=False):
             '''
-
-            ### Procura de atendimento médico por entrevistados sintomáticos
-
-            Questão 03: Como está a procura por atendimento médico entre os entrevistados com sintomas de COVID-19?
+            **Como está a procura por atendimento médico entre os entrevistados com sintomas de COVID-19?**
 
             Nesta análise, o objetivo foi quantificar os entrevistados que procuraram atendimento médico entre os que apresentaram febre, tosse ou perda olfato/paladar
             nos últimos 3 meses.
@@ -403,7 +606,7 @@ with tab2:
             4. Por causa disso, foi a algum estabelecimento de saúde?
 
             '''
-            if st.button("Programação 03", type="secondary"):
+            if st.button("Programação 06", type="secondary"):
                 '''
                 ### SQL
                 ```sql
@@ -436,7 +639,7 @@ with tab2:
                 ORDER BY V1013
                 ```
                 '''
-        if st.button("Carregar Gráfico 03", type="primary"):
+        if st.button("Carregar Gráfico 06", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "grafico_atendimento"
                 components.iframe(src, width = 700, height = 800, scrolling = False)
@@ -458,16 +661,17 @@ with tab2:
             mais estrutura hospitalar.
             '''
         st.divider()
-        with st.expander("Questão 04 - sintomas (clique para expandir/retrair)", expanded=False):
+        '''
+        ### Número de entrevistados internados por tipo de sintoma
+        '''
+        with st.expander("Questão 07 (clique para expandir/retrair)", expanded=False):
             '''
-            ### Número de entrevistados internados por tipo de sintoma
-
-            **Questão 04:** Entre os sintomais mais sintomas frequentes de COVID-19, qual está mais relacionado com internações?
+            **Entre os sintomais mais sintomas frequentes de COVID-19, qual está mais relacionado com internações?**
 
             A capacidade dos sistemas de saúde, tanto públicos como privados, é um fator extremamente importante em uma pandemia, pois em picos de infecção da população pode haver falta
             de leitos e pacientes podem não receber o devido atendimento.
 
-            Neste sentido, a Questão 04 busca entender a relação entre os sintomas e as ocorrências de internação entre a população da pesquisa, para que hospitais possam priorizar esforços
+            Neste sentido, a Questão 07 busca entender a relação entre os sintomas e as ocorrências de internação entre a população da pesquisa, para que hospitais possam priorizar esforços
             em casos com sintomas mais graves.
 
             Questionário: 
@@ -481,7 +685,7 @@ with tab2:
             4. Ao procurar o hospital, teve que ficar internado por um dia ou mais?
             
             '''
-            if st.button("Programação 04 - sintomas", type="secondary"):
+            if st.button("Programação 07", type="secondary"):
                 '''
                 **Obs:** este processamento foi realizado utilizando Python + Google Big Query
 
@@ -517,7 +721,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 04 - sintomas", type="primary"):
+        if st.button("Carregar Gráfico 07", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "grafico_internacao"
                 components.iframe(src, width = 700, height = 800, scrolling = False)
@@ -539,207 +743,6 @@ with tab2:
 
                 '''
 
-    with tab2_02:
-        '''
-
-        ## Dados da população
-        '''
-        with st.expander("Questão 04 (clique para expandir/retrair)", expanded=False):
-            '''
-
-            ### Ditribuição da população da pesquisa por situação
-
-            Questão 04: Como está distribuida a população da pesquisa em questão de situação de domicílio?
-
-            Plotamos os dados de domicílio da população de entrevistados nos três meses avaliados, separando entre situação urbana e rural.
-
-            Com esses dados, podemos avaliar se a questão do domicílio pode ter alguma conexão com a presença da covid-19.
-
-            Questionário: Situação do domicílio
-
-            '''
-            if st.button("Programação 04", type="secondary"):
-                '''
-                
-                ### SQL
-                ```sql
-                SELECT uf, v1022, COUNT(case v1022 when '1' then 1 else null end) AS "urbana", COUNT(case v1022 when '2' then 1 else null end) AS "rural", COUNT(v1022) AS "total"
-                FROM dbo.pnad2020
-                GROUP BY
-                uf, v1022
-                ORDER BY
-                total DESC
-                ```
-
-                ### Python
-                ```python
-                fig_3 = px.bar(df_04_final, x="uf", y="total_por_situacao", color="situacao", title="Ditribuição da população da pesquisa por situação",
-                            labels=dict(uf="Estado", total_por_situacao="Nº de entrevistados", situacao="Situação"))
-                fig_3.update_layout(title_x=0.5)
-                plotly.offline.plot(fig_3, filename = 'br_distribuicao_populacao.html', auto_play=False, auto_open=False)
-                fig_3.show()
-                ```
-                '''
-        if st.button("Carregar Gráfico 04", type="primary"):
-            with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "https://cryptohub.com.br/DataFrame/br_distribuicao_populacao.html"
-                components.iframe(src, width = 700, height = 700, scrolling = False)
-                time.sleep(5)
-            '''
-            
-            ## Análise
-
-            Como esperado, a maioria dos entrevistados mora em zona urbana, sendo São Paulo, Minas Gerais e Rio de Janeiro os três estados com maior número de entrevistados.
-
-            Quanto à proporção de habitantes em zona rural e urbana por estado, destacam-se os estados do Nordeste com número elevado de habitantes em zona rural, enquanto RJ e DF tiveram
-            a grande maioria de seus entrevistados com moradia em área urbana.
-
-            Do ponto de vista da pandemia, esta é uma informação relevante pois zonas urbanas são áreas de maior circulação e concentração de pessoas, o que facilita a propagação de doenças
-            como o COVID-19. Portanto, estados em que a população está mais concentrada em zonas urbanas podem ser mais vulneráveis.
-
-            Por outro lado, zonas rurais possuem menos infraestrutura hospitalar, portanto casos graves ocorridos nessas regiões devem receber atenção especial.
-
-            '''
-        st.divider()
-        with st.expander("Questão 05 - população (clique para expandir/retrair)", expanded=False):
-            '''
-
-            ### Ditribuição da população por região de moradia
-
-            Questão 04: Como está distribuida a população da pesquisa nas UFs do Brasil quanto à região de moradia?
-
-            Com o objetivo de analisar mais a fundo a questão da distribuição da população no território brasileiro, o gráfico abaixo permite identificar os estados em que a população
-            está altamente concentrada em polos político-econômicos como Capitais e Regiões Metropolitanos.
-
-            Questionário: 
-            
-            1. Tipo de área (capital, região metropolitana, etc.)
-
-            2. UF
-
-            '''
-            if st.button("Programação 05 - população", type="secondary"):
-                '''
-                ### SQL
-
-                ```sql
-                SELECT 
-                    uf,
-                    (CASE
-                        WHEN V1023 = 1 THEN 1
-                        WHEN V1023 = 2 THEN 2
-                        WHEN V1023 = 3 THEN 2
-                        WHEN V1023 = 4 THEN 4
-                    END) as V1023,
-                    COUNT(CASE
-                        WHEN V1023 = 1 THEN 1
-                        WHEN V1023 = 2 THEN 2
-                        WHEN V1023 = 3 THEN 2
-                        WHEN V1023 = 4 THEN 4
-                    END) as V1023
-
-                FROM `brave-tea-400210.fase_3_tech_challenge.pnad-covid-19`
-
-                GROUP BY uf, new_regiao_moradia
-                ORDER BY uf, new_regiao_moradia
-                ```
-
-                ### Python
-
-                ```python
-                fig_3 = px.bar(df_results.sort_values(by=['n_regiao_moradia'], ascending=False), x="uf", y="n_regiao_moradia", color="new_regiao_moradia", title="Distribuição da população da pesquisa por região de moradia<br>PNAD COVID-19",
-                labels=dict(uf="Estado", n_regiao_moradia="Nº de entrevistados", new_regiao_moradia="Região de moradia"))
-                fig_3.update_layout(title_x=0.5, width=1200, height=700, legend_traceorder='reversed')
-                fig_3.show()
-                ```
-                '''
-        if st.button("Carregar Gráfico 05 - populacao", type="primary"):
-            with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "grafico 5 - populacao"
-                components.iframe(src, width = 700, height = 700, scrolling = False)
-                time.sleep(5)
-            
-            '''
-            ## Análise
-
-            Novamente, os dados mostram que o Distrito Federal e o Rio de Janeiro são duas UFs com população altamente concentrada em grandes cidades. Além deles, Goiás, Amazonas e Amapá também tiveram
-            mais da metade de seus entrevistados informando que moram em Capitais ou Regiões Metropolitanas.
-
-            Estas 5 UFs podem estar mais suscetíveis à ocorrência de grandes picos de contaminação, o que consequentemente podem gerar uma grande sobrecarga nos sitemas de saúde público e privado. Por isso, medidas de
-            educação ou de redução de contato social entre os habitantes devem ser ainda mais úteis nesse contexto.
-            '''
-            
-    with tab2_03:
-        '''
-
-        ## Dados sociais e econômicos
-        '''
-        with st.expander("Questão 05 (clique para expandir/retrair)", expanded=False):
-            '''
-
-            ### Número de entrevistados em diferentes faixas de aluguel por estado
-
-            Questão 05: Como é a distribuição dos entrevistados pelo Brasil, de acordo com diferentes faixas de aluguel?
-
-            Selecionamos os cinco principais estados por faixa de aluguel dos entrevistados. Assim, teremos uma noção da distribuição dos entrevistados da PNAD de 2020 de acordo com o local onde vivem, se em regiões mais populares ou mais nobres.
-
-            Questionário: Número da faixa do aluguel pago
-
-            '''
-            if st.button("Programação 05", type="secondary"):
-                '''
-                
-                ### SQL
-                ```sql
-                SELECT uf, f0022, COUNT(f0022) AS "faixa_do_aluguel"
-                FROM dbo.pnad2020
-                GROUP BY
-                uf, f0022
-                ORDER BY
-                faixa_do_aluguel DESC
-                ```
-
-                ### Python
-                ```python
-                fig_1 = make_subplots(rows=2, cols=2, specs=[[{'type':'domain'}, {'type':'domain'}],[{'type':'domain'}, {'type':'domain'}]])
-                fig_1.add_trace(go.Pie(labels=faixa_01["Estado"], values=faixa_01["Quantidade"], name="301-600"),
-                            1, 1)
-                fig_1.add_trace(go.Pie(labels=faixa_02["Estado"], values=faixa_02["Quantidade"], name="801-1.600"),
-                            1, 2)
-                fig_1.add_trace(go.Pie(labels=faixa_03["Estado"], values=faixa_03["Quantidade"], name="601-800"),
-                            2, 1)
-                fig_1.add_trace(go.Pie(labels=faixa_04["Estado"], values=faixa_04["Quantidade"], name="101-300"),
-                            2, 2)
-
-                # Tamanho do buraco da rosca
-                fig_1.update_traces(hole=0.7, hoverinfo="label+value+percent", textinfo='value')
-
-                fig_1.update_layout(title_text="Número de entrevistados em diferentes faixas de aluguel por estado", title_x=0.5, title=dict(font=dict(size=16)),legend=dict(font=dict(size=14)),
-                                    annotations=[dict(text='301-600<br>Reais', x=0.160, y=0.82, font_size=18, showarrow=False),
-                                                dict(text='801-1.600<br>Reais', x=0.9, y=0.82, font_size=18, showarrow=False),
-                                                dict(text='601-800<br>Reais', x=0.160, y=0.12, font_size=18, showarrow=False),
-                                                dict(text='101-300<br>Reais', x=0.9, y=0.12, font_size=18, showarrow=False)
-                                                ]
-                                    )
-                plotly.offline.plot(fig_1, filename = 'br_faixa_aluguel.html', auto_open=False)
-                fig_1.show()
-                ```
-                '''
-
-        if st.button("Carregar Gráfico 05", type="primary"):
-            with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "https://cryptohub.com.br/DataFrame/br_faixa_aluguel.html"
-                components.iframe(src, width = 700, height = 700, scrolling = False)
-                time.sleep(2)
-            '''
-            
-            ## Análise
-
-            Pelo gráfico, podemos notar que a maioria dos entrevistados que pagam a maior faixa salarial estão na região sudeste e logo em seguida a região sul e centro-oeste.
-
-            Além disso, a maioria dos entrevistados pagam a faixa de 301-600 reais de aluguel, dentro dos quais a maioria é de Minas Gerais.
-            '''
-        st.divider()
         
 with tab3:
     '''
