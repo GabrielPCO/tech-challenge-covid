@@ -235,7 +235,7 @@ with tab2:
             Questionário: Situação do domicílio
 
             '''
-            if st.button("Programação 01 - população", type="secondary"):
+            if st.button("Programação 01", type="secondary"):
                 '''
                 
                 ### SQL
@@ -257,11 +257,11 @@ with tab2:
                 fig_3.show()
                 ```
                 '''
-        if st.button("Carregar Gráfico 01 - população", type="primary"):
+        if st.button("Carregar Gráfico 01", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_distribuicao_populacao.html"
                 components.iframe(src, width = 700, height = 700, scrolling = False)
-                time.sleep(5)
+                time.sleep(2)
             '''
             
             ## Análise
@@ -293,7 +293,7 @@ with tab2:
             2. UF
 
             '''
-            if st.button("Programação 02 - população", type="secondary"):
+            if st.button("Programação 02", type="secondary"):
                 '''
                 ### SQL
 
@@ -328,11 +328,11 @@ with tab2:
                 fig_3.show()
                 ```
                 '''
-        if st.button("Carregar Gráfico 02 - população", type="primary"):
+        if st.button("Carregar Gráfico 02", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "grafico 5 - populacao"
-                components.iframe(src, width = 700, height = 700, scrolling = False)
-                time.sleep(5)
+                src = "https://cryptohub.com.br/DataFrame/questao_2_populacao_Distribuição da população da pesquisa por região de moradia.html"
+                components.iframe(src, width = 1200, height = 700, scrolling = False)
+                time.sleep(2)
             
             '''
             ## Análise
@@ -641,8 +641,8 @@ with tab2:
                 '''
         if st.button("Carregar Gráfico 06", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "grafico_atendimento"
-                components.iframe(src, width = 700, height = 800, scrolling = False)
+                src = "https://cryptohub.com.br/DataFrame/questao_6_Procura de atendimento por entrevistados sintomaticos.html"
+                components.iframe(src, width = 700, height = 600, scrolling = False)
                 time.sleep(2)
             '''
             
@@ -723,8 +723,8 @@ with tab2:
 
         if st.button("Carregar Gráfico 07", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "grafico_internacao"
-                components.iframe(src, width = 700, height = 800, scrolling = False)
+                src = "https://cryptohub.com.br/DataFrame/questao_7_Numero de internados de acordo com tipo de sintoma.html"
+                components.iframe(src, width = 700, height = 600, scrolling = False)
                 time.sleep(2)
                 '''
                 
