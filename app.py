@@ -222,7 +222,150 @@ with tab2:
 
         ## Caracterizando a população
 
-        ### Ditribuição da população da pesquisa por situação de moradia
+        ### Pirâmide etária
+
+        '''
+        with st.expander("Questão 01 (clique para expandir/retrair)", expanded=False):
+            '''
+            **Como a população da pesquisa está distribuída quanto ao sexo e faixa etária?**
+
+            A Pirâmide Etária é uma importante ferramente de análises demográficas, pois permite caracterizar diversos aspectos da população como natalidade,
+            longevidade, além de permitir traçar cenários futuros para a população do país.
+
+            Do ponto de vista da pandemia auxilia a delimitar e quantificar grupos de risco existentes na população, como por exemplo pessoas acima dos 60 anos.
+
+            Questionário:
+            1. Sexo
+
+            2. Idade
+            '''
+            if st.button('Programação 01 - população', type='secondary'):
+                '''
+                ### SQL
+
+                ```sql
+                with idade_data as 
+                ( SELECT 
+                    A003,
+                    A002,
+                    count(idade) as count_idade
+                FROM `{project_id}.{dataset_id}.{table_id}` 
+                GROUP BY A003, A002),
+
+                grupo_idade_data as
+                (SELECT
+                    A003,
+                    A002,
+                    count_idade,
+                    CASE
+                        WHEN A002 <= 10 THEN '0-10'
+                        WHEN A002 BETWEEN 11 AND 20 THEN '11-20'
+                        WHEN A002 BETWEEN 21 AND 30 THEN '21-30'
+                        WHEN A002 BETWEEN 31 AND 40 THEN '31-40'
+                        WHEN A002 BETWEEN 41 AND 50 THEN '41-50'
+                        WHEN A002 BETWEEN 51 AND 60 THEN '51-60'
+                        WHEN A002 BETWEEN 61 AND 70 THEN '61-70'
+                        WHEN A002 BETWEEN 71 AND 80 THEN '71-80'
+                        WHEN A002 > 80 THEN '80+'
+                    END as grupo_idade
+                FROM idade_data)
+
+                SELECT
+                    A003,
+                    grupo_idade,
+                    SUM(count_idade) as count_grupo_idade
+                FROM grupo_idade_data
+                GROUP BY A003, grupo_idade
+                ORDER BY A003, grupo_idade
+                ```
+
+                ### Python
+                ```python
+                age_groups = list(df_results.sort_values(by='grupo_idade')['grupo_idade'].unique())
+
+                males_population = list(df_results.sort_values(by='grupo_idade').loc[df_results['sexo'] == 'Homem']['count_grupo_idade'])
+                males_population = [-neg_value for neg_value in males_population]
+                females_population = list(df_results.sort_values(by='grupo_idade').loc[df_results['sexo'] == 'Mulher']['count_grupo_idade'])
+
+                # Create a subplot with two horizontal bar charts
+                fig = make_subplots(rows=1, cols=2, shared_yaxes=True, subplot_titles=('Homens', 'Mulheres'))
+
+                # Add bar traces for males and females
+                fig.add_trace(go.Bar(x=males_population, y=age_groups, orientation='h', name='Homens'), row=1, col=1)
+                fig.add_trace(go.Bar(x=females_population, y=age_groups, orientation='h', name='Mulheres'), row=1, col=2)
+
+                # Custom xticks
+                fig.update_layout(xaxis2 = dict(
+                    tickmode='array',
+                    tickvals = [90000, 80000, 70000, 60000, 50000, 40000, 30000, 20000, 10000, 0],
+                    ticktext = ['90,000', '80,000', '70,000', '60,000', '50,000', '40,000', '30,000', '20,000', '10,000', '0']
+                    )
+                )
+
+                # Custom xticks
+                fig.update_layout(xaxis1 = dict(
+                    tickmode='array',
+                    tickvals = [-90000, -80000, -70000, -60000, -50000, -40000, -30000, -20000, -10000, 0],
+                    ticktext = ['90,000', '80,000', '70,000', '60,000', '50,000', '40,000', '30,000', '20,000', '10,000', '0']
+                    )
+                )
+
+                # Customize layout
+                fig.update_xaxes(title_text='Nº de entrevistados', row=1, col=1)
+                fig.update_xaxes(title_text='Nº de entrevistados', row=1, col=2)
+
+                # Set the range of the y-axis to reverse the age pyramid
+                #fig.update_yaxes(categoryorder='total ascending', row=1, col=1)
+                fig.update_yaxes(side='right', mirror=True, row=1, col=1)
+
+                # Add title and labels
+                fig.update_layout(title='Pirâmide etária dos entrevistados<br>PNAD COVID-19', title_x=0.5, xaxis=dict(title='Nº de entrevistados'), width=1000, margin_pad=5,
+                                showlegend=False, plot_bgcolor='white')
+
+                fig.update_xaxes(
+                    mirror=True,
+                    ticks='outside',
+                    showline=True,
+                    linecolor='black',
+                    gridcolor='lightgrey'
+                )
+                fig.update_yaxes(
+                    mirror=True,
+                    ticks='outside',
+                    showline=True,
+                    linecolor='black',
+                    gridcolor='lightgrey'
+                )
+
+                fig.layout.annotations[0].update(y=1.02)
+                fig.layout.annotations[1].update(y=1.02)
+
+                fig.show()
+                ```
+                '''
+        if st.button('Carregar Gráfico 01 - população', type='primary'):
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                src = "piramide etaria"
+                components.iframe(src, width = 700, height = 700, scrolling = False)
+                time.sleep(2)
+
+                '''
+                ## Análise
+
+                Pode-se dizer que a Pirâmide Etária é saúdável do ponto de vista demográfico pois a maioria da população está concentrada no meio da pirâmide, ou seja na fase adulta, o que significa
+                que economicamente há pessoas disponíveis para trabalhar e, comparando com cenários de décadas passadas, há menor mortalidade entre os mais jovens.
+
+                Ainda assim, há uma porcentagem grande da população com menos de 20 anos, principalmente homens, portanto há margem de crescimento nos próximos anos para as faixas etárias do meio da pirâmide.
+
+                Do ponto de vista dos grupos de risco do COVID-19, os dados mostram que a maior parte dos entrevistados têm entre 61 e 70 anos e uma parcela pequena da população possui mais de 80 anos.
+                Neste ponto, é importante destacar que há uma grande predominância de mulheres nas faixas etárias mais elevadas, indicando que o sexo feminino possui maior longevidade e possivelmente será o perfil
+                mais comum nos casos graves envolvendo grupos de risco COVID-19.
+                
+                '''
+        st.divider()
+
+        '''
+        ### Distribuição da população da pesquisa por situação de moradia
         '''
         with st.expander("Questão 01 (clique para expandir/retrair)", expanded=False):
             '''        
@@ -278,7 +421,7 @@ with tab2:
 
             '''
         st.divider()
-        '''### Ditribuição da população por região de moradia'''
+        '''### Distribuição da população por região de moradia'''
         with st.expander("Questão 02 (clique para expandir/retrair)", expanded=False):
             '''
             **Como está distribuida a população da pesquisa nas UFs do Brasil quanto à região de moradia?**
