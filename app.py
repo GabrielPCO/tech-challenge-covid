@@ -239,7 +239,7 @@ with tab2:
 
             2. Idade
             '''
-            if st.button('Programação 01 - população', type='secondary'):
+            if st.button('Programação 01', type='secondary'):
                 '''
                 ### SQL
 
@@ -343,10 +343,10 @@ with tab2:
                 fig.show()
                 ```
                 '''
-        if st.button('Carregar Gráfico 01 - população', type='primary'):
+        if st.button('Carregar Gráfico 01', type='primary'):
             with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "piramide etaria"
-                components.iframe(src, width = 700, height = 700, scrolling = False)
+                src = "https://cryptohub.com.br/DataFrame/questao_1_população_Piramide_Etaria.html"
+                components.iframe(src, width = 1000, height = 700, scrolling = False)
                 time.sleep(2)
 
                 '''
@@ -367,7 +367,7 @@ with tab2:
         '''
         ### Distribuição da população da pesquisa por situação de moradia
         '''
-        with st.expander("Questão 01 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 02 (clique para expandir/retrair)", expanded=False):
             '''        
             **Como está distribuida a população da pesquisa em questão de situação de domicílio?**
 
@@ -378,7 +378,7 @@ with tab2:
             Questionário: Situação do domicílio
 
             '''
-            if st.button("Programação 01", type="secondary"):
+            if st.button("Programação 02", type="secondary"):
                 '''
                 
                 ### SQL
@@ -400,7 +400,7 @@ with tab2:
                 fig_3.show()
                 ```
                 '''
-        if st.button("Carregar Gráfico 01", type="primary"):
+        if st.button("Carregar Gráfico 02", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_distribuicao_populacao.html"
                 components.iframe(src, width = 700, height = 700, scrolling = False)
@@ -422,7 +422,7 @@ with tab2:
             '''
         st.divider()
         '''### Distribuição da população por região de moradia'''
-        with st.expander("Questão 02 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 03 (clique para expandir/retrair)", expanded=False):
             '''
             **Como está distribuida a população da pesquisa nas UFs do Brasil quanto à região de moradia?**
 
@@ -436,7 +436,7 @@ with tab2:
             2. UF
 
             '''
-            if st.button("Programação 02", type="secondary"):
+            if st.button("Programação 03", type="secondary"):
                 '''
                 ### SQL
 
@@ -471,7 +471,7 @@ with tab2:
                 fig_3.show()
                 ```
                 '''
-        if st.button("Carregar Gráfico 02", type="primary"):
+        if st.button("Carregar Gráfico 03", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/questao_2_populacao_Distribuição da população da pesquisa por região de moradia.html"
                 components.iframe(src, width = 1200, height = 700, scrolling = False)
@@ -494,7 +494,7 @@ with tab2:
 
         ### Distribuição da população quanto ao valor de aluguel pago
         '''
-        with st.expander("Questão 03 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 04 (clique para expandir/retrair)", expanded=False):
             '''         
             **Como estava a distribuição dos entrevistados pelo Brasil de acordo com diferentes faixas de aluguel?**
 
@@ -503,7 +503,7 @@ with tab2:
             Questionário: Número da faixa do aluguel pago
 
             '''
-            if st.button("Programação 03", type="secondary"):
+            if st.button("Programação 04", type="secondary"):
                 '''
                 
                 ### SQL
@@ -543,7 +543,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 03", type="primary"):
+        if st.button("Carregar Gráfico 04", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_faixa_aluguel.html"
                 components.iframe(src, width = 700, height = 700, scrolling = False)
@@ -569,7 +569,7 @@ with tab2:
         ### Distribuição dos entrevistados pelo Brasil que apresentaram sintomas de covid-19
 
         '''
-        with st.expander("Questão 04 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 05 (clique para expandir/retrair)", expanded=False):
             '''
             **Como estão distribuidos os entrevistados que apresentaram sintomas de COVID-19?**
 
@@ -586,7 +586,7 @@ with tab2:
             Apenas casos nos quais a resposta foi sim para as três perguntas foram adicionados ao gráfico.
 
             '''
-            if st.button("Programação 04", type="secondary"):
+            if st.button("Programação 05", type="secondary"):
                 '''
 
                 ### SQL
@@ -623,7 +623,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 04", type="primary"):
+        if st.button("Carregar Gráfico 05", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_mapa_casos_febre.html"
                 components.iframe(src, width = 700, height = 800, scrolling = False)
@@ -641,7 +641,7 @@ with tab2:
         '''
         ### Porcentagem de casos por estado
         '''
-        with st.expander("Questão 05 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 06 (clique para expandir/retrair)", expanded=False):
             '''
             **Qual a proporção de casos de covid-19 em relação ao numero total de entrevistados dos cinco estados mais afetados?**
 
@@ -656,7 +656,7 @@ with tab2:
             3. Na semana passada teve dor na cabeça?
 
             '''
-            if st.button("Programação 05", type="secondary"):
+            if st.button("Programação 06", type="secondary"):
                 '''
 
                 ### Python
@@ -713,7 +713,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 05", type="primary"):
+        if st.button("Carregar Gráfico 06", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_porcentagem_casos.html"
                 components.iframe(src, width = 700, height = 800, scrolling = False)
@@ -731,7 +731,7 @@ with tab2:
         '''
         ### Procura de atendimento médico por entrevistados sintomáticos
         '''
-        with st.expander("Questão 06 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 07 (clique para expandir/retrair)", expanded=False):
             '''
             **Como está a procura por atendimento médico entre os entrevistados com sintomas de COVID-19?**
 
@@ -749,7 +749,7 @@ with tab2:
             4. Por causa disso, foi a algum estabelecimento de saúde?
 
             '''
-            if st.button("Programação 06", type="secondary"):
+            if st.button("Programação 07", type="secondary"):
                 '''
                 ### SQL
                 ```sql
@@ -782,7 +782,7 @@ with tab2:
                 ORDER BY V1013
                 ```
                 '''
-        if st.button("Carregar Gráfico 06", type="primary"):
+        if st.button("Carregar Gráfico 07", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/questao_6_Procura de atendimento por entrevistados sintomaticos.html"
                 components.iframe(src, width = 700, height = 600, scrolling = False)
@@ -807,7 +807,7 @@ with tab2:
         '''
         ### Número de entrevistados internados por tipo de sintoma
         '''
-        with st.expander("Questão 07 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 08 (clique para expandir/retrair)", expanded=False):
             '''
             **Entre os sintomais mais sintomas frequentes de COVID-19, qual está mais relacionado com internações?**
 
@@ -828,7 +828,7 @@ with tab2:
             4. Ao procurar o hospital, teve que ficar internado por um dia ou mais?
             
             '''
-            if st.button("Programação 07", type="secondary"):
+            if st.button("Programação 08", type="secondary"):
                 '''
                 **Obs:** este processamento foi realizado utilizando Python + Google Big Query
 
@@ -864,7 +864,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 07", type="primary"):
+        if st.button("Carregar Gráfico 08", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/questao_7_Numero de internados de acordo com tipo de sintoma.html"
                 components.iframe(src, width = 700, height = 600, scrolling = False)
