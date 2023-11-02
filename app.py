@@ -560,7 +560,37 @@ with tab2:
             do Nordeste entre as UFs com maior número de entrevistados, ou seja, são estados com população mais carente e que dependem ainda mais da infraestrutura de saúda pública.
             '''
         st.divider()
-    
+        '''
+        ### Distribuição de sexo, idade e renda dos entrevistados
+        '''
+        with st.expander("Questões 05 & 06 (clique para expandir/retrair)", expanded=False):
+            '''         
+            **Qual a distribuição dos entrevistados por uf em relação ao sexo?**
+
+            Questionário: 
+
+            1. Qual o sexo do entrevistado?
+
+            2. Em qual uf reside o entrevistado?
+
+            ------------------------------------------------------------------------------------------
+
+            **Qual a renda média dos entrevistados em relação a idade e situação de domicílio**
+
+            Questionário:
+
+            1. Qual o seu salário?
+
+            2. Qual a sua idade?
+
+            3. Situação do domicílio?
+
+            '''
+        if st.button("Carregar Gráficos 05 & 06 ", type="primary"):
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                st.markdown('<iframe width="1100" height="680" src="https://app.powerbi.com/view?r=eyJrIjoiOWRmNmI5MjQtZmQ0OS00NzhjLTg5MTktZGQ0YjE0MDA2MmIyIiwidCI6IjgxYTI4ZjEwLWUxYTEtNGJmNi04N2FlLWY1MDQ1ZTE0NjBjMCJ9" frameborder="0" allowFullScreen="true"></iframe>',unsafe_allow_html=True)
+                time.sleep(2)
+        st.divider()  
     with tab2_03:
         '''
 
@@ -569,7 +599,7 @@ with tab2:
         ### Distribuição dos entrevistados pelo Brasil que apresentaram sintomas de covid-19
 
         '''
-        with st.expander("Questão 05 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 07 (clique para expandir/retrair)", expanded=False):
             '''
             **Como estão distribuidos os entrevistados que apresentaram sintomas de COVID-19?**
 
@@ -586,7 +616,7 @@ with tab2:
             Apenas casos nos quais a resposta foi sim para as três perguntas foram adicionados ao gráfico.
 
             '''
-            if st.button("Programação 05", type="secondary"):
+            if st.button("Programação 07", type="secondary"):
                 '''
 
                 ### SQL
@@ -623,7 +653,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 05", type="primary"):
+        if st.button("Carregar Gráfico 07", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_mapa_casos_febre.html"
                 components.iframe(src, width = 700, height = 800, scrolling = False)
@@ -641,7 +671,7 @@ with tab2:
         '''
         ### Porcentagem de casos por estado
         '''
-        with st.expander("Questão 06 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 08 (clique para expandir/retrair)", expanded=False):
             '''
             **Qual a proporção de casos de covid-19 em relação ao numero total de entrevistados dos cinco estados mais afetados?**
 
@@ -656,7 +686,7 @@ with tab2:
             3. Na semana passada teve dor na cabeça?
 
             '''
-            if st.button("Programação 06", type="secondary"):
+            if st.button("Programação 08", type="secondary"):
                 '''
 
                 ### Python
@@ -713,7 +743,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 06", type="primary"):
+        if st.button("Carregar Gráfico 08", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_porcentagem_casos.html"
                 components.iframe(src, width = 700, height = 800, scrolling = False)
@@ -731,7 +761,7 @@ with tab2:
         '''
         ### Procura de atendimento médico por entrevistados sintomáticos
         '''
-        with st.expander("Questão 07 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 09 (clique para expandir/retrair)", expanded=False):
             '''
             **Como está a procura por atendimento médico entre os entrevistados com sintomas de COVID-19?**
 
@@ -749,7 +779,7 @@ with tab2:
             4. Por causa disso, foi a algum estabelecimento de saúde?
 
             '''
-            if st.button("Programação 07", type="secondary"):
+            if st.button("Programação 09", type="secondary"):
                 '''
                 ### SQL
                 ```sql
@@ -782,7 +812,7 @@ with tab2:
                 ORDER BY V1013
                 ```
                 '''
-        if st.button("Carregar Gráfico 07", type="primary"):
+        if st.button("Carregar Gráfico 09", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/questao_6_Procura de atendimento por entrevistados sintomaticos.html"
                 components.iframe(src, width = 700, height = 600, scrolling = False)
@@ -807,7 +837,7 @@ with tab2:
         '''
         ### Número de entrevistados internados por tipo de sintoma
         '''
-        with st.expander("Questão 08 (clique para expandir/retrair)", expanded=False):
+        with st.expander("Questão 10 (clique para expandir/retrair)", expanded=False):
             '''
             **Entre os sintomais mais sintomas frequentes de COVID-19, qual está mais relacionado com internações?**
 
@@ -828,7 +858,7 @@ with tab2:
             4. Ao procurar o hospital, teve que ficar internado por um dia ou mais?
             
             '''
-            if st.button("Programação 08", type="secondary"):
+            if st.button("Programação 10", type="secondary"):
                 '''
                 **Obs:** este processamento foi realizado utilizando Python + Google Big Query
 
@@ -864,7 +894,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 08", type="primary"):
+        if st.button("Carregar Gráfico 10", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/questao_7_Numero de internados de acordo com tipo de sintoma.html"
                 components.iframe(src, width = 700, height = 600, scrolling = False)
