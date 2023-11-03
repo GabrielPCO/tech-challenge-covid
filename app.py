@@ -421,6 +421,7 @@ with tab2:
 
             '''
         st.divider()
+        
         '''### Distribuição da população por região de moradia'''
         with st.expander("Questão 03 (clique para expandir/retrair)", expanded=False):
             '''
@@ -486,6 +487,78 @@ with tab2:
             Estas 5 UFs podem estar mais suscetíveis à ocorrência de grandes picos de contaminação, o que consequentemente podem gerar uma grande sobrecarga nos sitemas de saúde público e privado. Por isso, medidas de
             educação ou de redução de contato social entre os habitantes devem ser ainda mais úteis nesse contexto.
             '''
+        st.divider()
+        '''### Distribuição da população por cor/raça'''
+        with st.expander("Questão 04 (clique para expandir/retrair)", expanded=False):
+            '''
+            **Como está distribuída a população da pesquisa quanto à cor/raça nos estados brasileiros?**
+
+            O Brasil está entre os países mais diversos do ponto de vista etnocultural, em que cada estado ou região possui seu contexto específico. Entretanto, alguns grupos são historicamente mais marginalizados
+            e uma grande parcela destas populações vivem em situação de vulnerabilidade social, como é o caso dos negros e indígenas.
+
+            Assim, é importante entender o cenário étnico de cada estado para que os esforços de controle da pandemia também estejam de acordo com os contextos locais.
+
+            Questionário:
+
+            1. Cor ou raça
+
+            2. UF
+
+            '''
+            if st.button('Programação 04 - população', type='secondary'):
+                '''
+                ### SQL
+                ```sql
+                with cont_raca as 
+                    (SELECT
+                        uf,
+                        A004,
+                        COUNT(A004) as n_cor_raca
+                    FROM `{project_id}.{dataset_id}.{table_id}` 
+                    GROUP BY uf, A004
+                    ORDER BY uf, A004)
+
+                SELECT
+                    uf,
+                    A004,
+                    n_cor_raca,
+                    ROUND(SUM(n_cor_raca)/SUM(n_cor_raca) OVER (PARTITION BY uf),4) AS proportion_raca
+                FROM
+                    cont_raca
+                GROUP BY
+                    uf, A004, n_cor_raca
+                ORDER BY uf, A004
+                ```
+
+                ### Python
+                ```python
+                fig_cor_raca = px.bar(df_results.sort_values(by=['proportion_raca'], ascending=False),
+                    x="uf", y="proportion_raca", color="A004",
+                    title="Ditribuição da população da pesquisa por cor/raça<br>PNAD COVID-19",
+                    labels=dict(uf="Estado", proportion_raca="Proporção (%)", A004="Cor/Raça"))
+
+                fig_cor_raca.update_layout(title_x=0.5, width=1200, height=700)
+
+                fig_cor_raca.show()
+                ```
+                '''
+            if st.button('Carregar gráfico 04 - população', type='primary'):
+                with st.spinner("Carregando o gráfico. Aguarde..."):
+                    src = "html cor e raca"
+                    components.iframe(src, width = 1200, height = 700, scrolling = False)
+                    time.sleep(2)
+                '''
+                ### Análise
+
+                Ao analisar o gráfico com um olhar para o país todo, os dados confirmam a miscigenação existente na população brasileira: a população parda foi a predominante entre os entrevistados.
+                Da mesma forma, há uma clara segmentação no perfil de acordo com as diferentes regiões brasileiras. Nas regiões Sul e Sudeste há uma presença maior de população branca e amarela,
+                bem como uma menor proporção de negros, especialmente na região Sul.
+
+                Já nas regiões Norte e Nordeste observa-se justamente o contrário, onde há relativamente maior proporção de pardos e pretos. A região Norte também é um caso especial devido à grande quantidade de indígenas
+                que moram em estados como Amazonas e Roraima. No contexto da pandemia, estes estados devem receber cuidado especial por terem populações mais suscetíveis aos impactos socioeconômicos do COVID-19 e por
+                terem maior dependência do sitema público de saúde.
+
+                '''
 
     with tab2_02:
         '''
