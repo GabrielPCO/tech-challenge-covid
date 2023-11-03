@@ -10,6 +10,8 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import streamlit.components.v1 as components
 
+num = 0
+
 # Configurando a página
 st.set_page_config(
     page_title="Tech-Challenge",
@@ -225,7 +227,8 @@ with tab2:
         ### Pirâmide etária
 
         '''
-        with st.expander("Questão 01 (clique para expandir/retrair)", expanded=False):
+        num+=1
+        with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
             '''
             **Como a população da pesquisa está distribuída quanto ao sexo e faixa etária?**
 
@@ -239,7 +242,7 @@ with tab2:
 
             2. Idade
             '''
-            if st.button('Programação 01', type='secondary'):
+            if st.button(f'Programação { num }', type='secondary'):
                 '''
                 ### SQL
 
@@ -343,7 +346,7 @@ with tab2:
                 fig.show()
                 ```
                 '''
-        if st.button('Carregar Gráfico 01', type='primary'):
+        if st.button(f'Carregar Gráfico { num }', type='primary'):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/questao_1_população_Piramide_Etaria.html"
                 components.iframe(src, width = 1000, height = 700, scrolling = False)
@@ -367,7 +370,8 @@ with tab2:
         '''
         ### Distribuição da população da pesquisa por situação de moradia
         '''
-        with st.expander("Questão 02 (clique para expandir/retrair)", expanded=False):
+        num+=1
+        with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
             '''        
             **Como está distribuida a população da pesquisa em questão de situação de domicílio?**
 
@@ -378,7 +382,7 @@ with tab2:
             Questionário: Situação do domicílio
 
             '''
-            if st.button("Programação 02", type="secondary"):
+            if st.button(f"Programação { num }", type="secondary"):
                 '''
                 
                 ### SQL
@@ -400,7 +404,7 @@ with tab2:
                 fig_3.show()
                 ```
                 '''
-        if st.button("Carregar Gráfico 02", type="primary"):
+        if st.button(f"Carregar Gráfico { num }", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_distribuicao_populacao.html"
                 components.iframe(src, width = 700, height = 700, scrolling = False)
@@ -423,7 +427,8 @@ with tab2:
         st.divider()
         
         '''### Distribuição da população por região de moradia'''
-        with st.expander("Questão 03 (clique para expandir/retrair)", expanded=False):
+        num+=1
+        with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
             '''
             **Como está distribuida a população da pesquisa nas UFs do Brasil quanto à região de moradia?**
 
@@ -437,7 +442,7 @@ with tab2:
             2. UF
 
             '''
-            if st.button("Programação 03", type="secondary"):
+            if st.button(f"Programação { num }", type="secondary"):
                 '''
                 ### SQL
 
@@ -472,7 +477,7 @@ with tab2:
                 fig_3.show()
                 ```
                 '''
-        if st.button("Carregar Gráfico 03", type="primary"):
+        if st.button(f"Carregar Gráfico { num }", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/questao_2_populacao_Distribuição da população da pesquisa por região de moradia.html"
                 components.iframe(src, width = 1200, height = 700, scrolling = False)
@@ -489,7 +494,8 @@ with tab2:
             '''
         st.divider()
         '''### Distribuição da população por cor/raça'''
-        with st.expander("Questão 04 (clique para expandir/retrair)", expanded=False):
+        num+=1
+        with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
             '''
             **Como está distribuída a população da pesquisa quanto à cor/raça nos estados brasileiros?**
 
@@ -505,7 +511,7 @@ with tab2:
             2. UF
 
             '''
-            if st.button('Programação 04 - população', type='secondary'):
+            if st.button(f'Programação { num }', type='secondary'):
                 '''
                 ### SQL
                 ```sql
@@ -542,23 +548,23 @@ with tab2:
                 fig_cor_raca.show()
                 ```
                 '''
-            if st.button('Carregar gráfico 04 - população', type='primary'):
-                with st.spinner("Carregando o gráfico. Aguarde..."):
-                    src = "html cor e raca"
-                    components.iframe(src, width = 1200, height = 700, scrolling = False)
-                    time.sleep(2)
-                '''
-                ### Análise
+        if st.button(f'Carregar gráfico { num }', type='primary'):
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                src = "https://cryptohub.com.br/DataFrame/questao_4_populacao_Distribuição da populacao da pesquisa por cor-raça.html"
+                components.iframe(src, width = 1200, height = 700, scrolling = False)
+                time.sleep(2)
+            '''
+            ### Análise
 
-                Ao analisar o gráfico com um olhar para o país todo, os dados confirmam a miscigenação existente na população brasileira: a população parda foi a predominante entre os entrevistados.
-                Da mesma forma, há uma clara segmentação no perfil de acordo com as diferentes regiões brasileiras. Nas regiões Sul e Sudeste há uma presença maior de população branca e amarela,
-                bem como uma menor proporção de negros, especialmente na região Sul.
+            Ao analisar o gráfico com um olhar para o país todo, os dados confirmam a miscigenação existente na população brasileira: a população parda foi a predominante entre os entrevistados.
+            Da mesma forma, há uma clara segmentação no perfil de acordo com as diferentes regiões brasileiras. Nas regiões Sul e Sudeste há uma presença maior de população branca e amarela,
+            bem como uma menor proporção de negros, especialmente na região Sul.
 
-                Já nas regiões Norte e Nordeste observa-se justamente o contrário, onde há relativamente maior proporção de pardos e pretos. A região Norte também é um caso especial devido à grande quantidade de indígenas
-                que moram em estados como Amazonas e Roraima. No contexto da pandemia, estes estados devem receber cuidado especial por terem populações mais suscetíveis aos impactos socioeconômicos do COVID-19 e por
-                terem maior dependência do sitema público de saúde.
+            Já nas regiões Norte e Nordeste observa-se justamente o contrário, onde há relativamente maior proporção de pardos e pretos. A região Norte também é um caso especial devido à grande quantidade de indígenas
+            que moram em estados como Amazonas e Roraima. No contexto da pandemia, estes estados devem receber cuidado especial por terem populações mais suscetíveis aos impactos socioeconômicos do COVID-19 e por
+            terem maior dependência do sitema público de saúde.
 
-                '''
+            '''
 
     with tab2_02:
         '''
@@ -567,7 +573,8 @@ with tab2:
 
         ### Distribuição da população quanto ao valor de aluguel pago
         '''
-        with st.expander("Questão 04 (clique para expandir/retrair)", expanded=False):
+        num+=1
+        with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
             '''         
             **Como estava a distribuição dos entrevistados pelo Brasil de acordo com diferentes faixas de aluguel?**
 
@@ -576,7 +583,7 @@ with tab2:
             Questionário: Número da faixa do aluguel pago
 
             '''
-            if st.button("Programação 04", type="secondary"):
+            if st.button(f"Programação { num }", type="secondary"):
                 '''
                 
                 ### SQL
@@ -616,7 +623,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 04", type="primary"):
+        if st.button(f"Carregar Gráfico { num }", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_faixa_aluguel.html"
                 components.iframe(src, width = 700, height = 700, scrolling = False)
@@ -636,7 +643,8 @@ with tab2:
         '''
         ### Distribuição de sexo, idade e renda dos entrevistados
         '''
-        with st.expander("Questões 05 & 06 (clique para expandir/retrair)", expanded=False):
+        num+=1
+        with st.expander(f"Questões { num } & { num+1} (clique para expandir/retrair)", expanded=False):
             '''         
             **Qual a distribuição dos entrevistados por uf em relação ao sexo?**
 
@@ -659,7 +667,7 @@ with tab2:
             3. Situação do domicílio?
 
             '''
-        if st.button("Carregar Gráficos 05 & 06 ", type="primary"):
+        if st.button(f"Carregar Gráficos { num } & { num+1 }", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 st.markdown('<iframe width="1100" height="680" src="https://app.powerbi.com/view?r=eyJrIjoiOWRmNmI5MjQtZmQ0OS00NzhjLTg5MTktZGQ0YjE0MDA2MmIyIiwidCI6IjgxYTI4ZjEwLWUxYTEtNGJmNi04N2FlLWY1MDQ1ZTE0NjBjMCJ9" frameborder="0" allowFullScreen="true"></iframe>',unsafe_allow_html=True)
                 time.sleep(2)
@@ -672,7 +680,8 @@ with tab2:
         ### Distribuição dos entrevistados pelo Brasil que apresentaram sintomas de covid-19
 
         '''
-        with st.expander("Questão 07 (clique para expandir/retrair)", expanded=False):
+        num+=2
+        with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
             '''
             **Como estão distribuidos os entrevistados que apresentaram sintomas de COVID-19?**
 
@@ -689,7 +698,7 @@ with tab2:
             Apenas casos nos quais a resposta foi sim para as três perguntas foram adicionados ao gráfico.
 
             '''
-            if st.button("Programação 07", type="secondary"):
+            if st.button(f"Programação { num }", type="secondary"):
                 '''
 
                 ### SQL
@@ -726,7 +735,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 07", type="primary"):
+        if st.button(f"Carregar Gráfico { num }", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_mapa_casos_febre.html"
                 components.iframe(src, width = 700, height = 800, scrolling = False)
@@ -744,7 +753,8 @@ with tab2:
         '''
         ### Porcentagem de casos por estado
         '''
-        with st.expander("Questão 08 (clique para expandir/retrair)", expanded=False):
+        num+=1
+        with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
             '''
             **Qual a proporção de casos de covid-19 em relação ao numero total de entrevistados dos cinco estados mais afetados?**
 
@@ -759,7 +769,7 @@ with tab2:
             3. Na semana passada teve dor na cabeça?
 
             '''
-            if st.button("Programação 08", type="secondary"):
+            if st.button(f"Programação { num }", type="secondary"):
                 '''
 
                 ### Python
@@ -816,7 +826,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 08", type="primary"):
+        if st.button(f"Carregar Gráfico { num }", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/br_porcentagem_casos.html"
                 components.iframe(src, width = 700, height = 800, scrolling = False)
@@ -834,7 +844,8 @@ with tab2:
         '''
         ### Procura de atendimento médico por entrevistados sintomáticos
         '''
-        with st.expander("Questão 09 (clique para expandir/retrair)", expanded=False):
+        num+=1
+        with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
             '''
             **Como está a procura por atendimento médico entre os entrevistados com sintomas de COVID-19?**
 
@@ -852,7 +863,7 @@ with tab2:
             4. Por causa disso, foi a algum estabelecimento de saúde?
 
             '''
-            if st.button("Programação 09", type="secondary"):
+            if st.button(f"Programação { num }", type="secondary"):
                 '''
                 ### SQL
                 ```sql
@@ -885,7 +896,7 @@ with tab2:
                 ORDER BY V1013
                 ```
                 '''
-        if st.button("Carregar Gráfico 09", type="primary"):
+        if st.button(f"Carregar Gráfico { num }", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/questao_6_Procura de atendimento por entrevistados sintomaticos.html"
                 components.iframe(src, width = 700, height = 600, scrolling = False)
@@ -910,7 +921,8 @@ with tab2:
         '''
         ### Número de entrevistados internados por tipo de sintoma
         '''
-        with st.expander("Questão 10 (clique para expandir/retrair)", expanded=False):
+        num+=1
+        with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
             '''
             **Entre os sintomais mais sintomas frequentes de COVID-19, qual está mais relacionado com internações?**
 
@@ -931,7 +943,7 @@ with tab2:
             4. Ao procurar o hospital, teve que ficar internado por um dia ou mais?
             
             '''
-            if st.button("Programação 10", type="secondary"):
+            if st.button(f"Programação { num }", type="secondary"):
                 '''
                 **Obs:** este processamento foi realizado utilizando Python + Google Big Query
 
@@ -967,7 +979,7 @@ with tab2:
                 ```
                 '''
 
-        if st.button("Carregar Gráfico 10", type="primary"):
+        if st.button(f"Carregar Gráfico { num }", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/questao_7_Numero de internados de acordo com tipo de sintoma.html"
                 components.iframe(src, width = 700, height = 600, scrolling = False)
@@ -987,9 +999,7 @@ with tab2:
                 Significa que pouco mais de 0.02% da população acaba necessitando de internação por complicações de febre, tosse ou perda de olfato/paladar. Este número é um bom indicador para hospitais e autoridades,
                 para entender o tamanho da demanda por leitos que pode existir em cada região do país.
 
-                '''
-
-        
+                '''     
 with tab3:
     '''
 
