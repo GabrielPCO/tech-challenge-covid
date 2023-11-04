@@ -671,7 +671,111 @@ with tab2:
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 st.markdown('<iframe width="1100" height="680" src="https://app.powerbi.com/view?r=eyJrIjoiOWRmNmI5MjQtZmQ0OS00NzhjLTg5MTktZGQ0YjE0MDA2MmIyIiwidCI6IjgxYTI4ZjEwLWUxYTEtNGJmNi04N2FlLWY1MDQ1ZTE0NjBjMCJ9" frameborder="0" allowFullScreen="true"></iframe>',unsafe_allow_html=True)
                 time.sleep(2)
-        st.divider()  
+        st.divider()
+        '''
+        ### Taxa de desocupação por escolaridade
+        '''
+        num+=1
+        num+=1
+        with st.expander(f"Questão {num} (clique para expandir/retrair)", expanded=False):
+            '''
+            **Qual a relação entre taxa de desocupação e escolaridade da população da pesquisa?**
+
+            Durante a pandemia, além das questões clínicas envolvendo a doença, um grande impacto socioeconômico atingiu o mundo,
+            tendo em vista que diversos setores da economia fecharam as portas ou reduziram drasticamente sua atuação para reduzir
+            o contato entre pessoas.
+
+            Consequentemente ocorreram corte de salários, demissões em massa e falência de negócios. Assim, a pandemia COVID-19
+            também contribuiu para o aumento da pobreza e vulnerabilidade social da população.
+
+            Esta análise busca entender se tais efeitos econômicos relacionados à ocupação e emprego têm relação com a escolaridade
+            da população.
+
+            Questionário:
+
+            1. Escolaridade
+
+            2. Na semana passada, por pelo menos uma hora, trabalhou ou fez algum bico?
+            '''
+            if st.button(f"Programação { num }", type="secondary"):
+                '''
+                ### SQL
+                ```sql
+                with cont_escolaridade_trabalho as (
+                SELECT 
+                    A005, C001, COUNT(*) as n_entrevistados
+                FROM
+                    `{project_id}.{dataset_id}.{table_id}`
+                GROUP BY A005, C001)
+
+                SELECT
+                    A005,
+                    C001,
+                    n_entrevistados,
+                    ROUND(SUM(n_entrevistados)/SUM(n_entrevistados) OVER (PARTITION BY A005),4) AS proportion
+                FROM
+                    cont_escolaridade_trabalho
+                GROUP BY
+                    A005, C001, n_entrevistados
+                ORDER BY A005, C001 DESC
+                ```
+
+                ### Python
+                ```python
+                dict_escolaridade = {'1':'Sem instrução','2':'Fundamental incompleto','3':'Fundamental completo', '4':'Médio incompleto',
+                     '5':'Médio completo','6':'Superior incompleto','7':'Superior completo','8':'Pós-graduação'}
+
+                dict_trabalhou = {'1':'Sim', '2':'Não', '0':'Não aplicável'}
+
+                df_results['escolaridade'] = df_results['escolaridade'].astype(str).replace(dict_escolaridade)
+                df_results['trabalhou'] = df_results['trabalhou'].astype(str).replace(dict_trabalhou)
+                df_results = df_results.loc[df_results['trabalhou'] != "Não aplicável"]
+                df_results.reset_index(drop=True, inplace=True)
+
+                df_desemprego = df_results.copy()
+                n_entrevistados_escolaridade = df_desemprego.groupby('escolaridade').agg({'n_entrevistados':'sum'}).reset_index()
+                n_entrevistados_escolaridade['n_entrevistados'] = n_entrevistados_escolaridade['n_entrevistados'].astype(int)
+
+                df_desemprego = df_desemprego.loc[df_desemprego['trabalhou'] == 'Sim']
+                df_desemprego['escolaridade_index'] = list(range(len(df_desemprego['escolaridade'].unique())))
+                df_desemprego['desemprego'] = (1 - df_desemprego['proportion']) * 100
+                df_desemprego.drop(columns=['n_entrevistados'],inplace=True)
+                df_desemprego = df_desemprego.merge(n_entrevistados_escolaridade, on='escolaridade')
+                
+                fig = px.scatter(df_desemprego, x="escolaridade", y="desemprego",
+                    size="n_entrevistados", color="escolaridade",
+                    hover_name="escolaridade", size_max=60, width=1300, height=600,
+                    color_discrete_sequence=px.colors.qualitative.G10,
+                    labels=dict(escolaridade="Escolaridade", desemprego="Taxa de desemprego (%)", n_entrevistados="Nº entrevistados"),
+                    title="Relação entre escolaridade e taxa de desemprego<br>PNAD COVID-19")
+
+                fig.update_yaxes(range=[0, 100])
+                fig.update_layout(title_x=0.5)
+
+                fig.show()
+                ```
+                '''
+        if st.button(f"Carregar Gráfico{num}", type="primary"):
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                src = "grafico taxa desocupacao"
+                components.iframe(src, width = 700, height = 700, scrolling = False)
+                time.sleep(2)
+
+            '''
+            ### Análise
+
+            Os dados evidenciam uma clara relação inversa entre taxa de desocupação e escolaridade. Isto é, quanto maior a escolaridade
+            da população menor era a taxa de desocupação durante a pandemia. Além da relação direta entre qualificação do indivíduo e
+            empregabilidade, no contexto da pandemia esse fator possivelmente foi ainda mais relevante.
+
+            Isso porque vagas que exigem maior escolaridade geralmente estão associadas a vagas em escritório e que tinha maior facilidade
+            de possibilitar o trabalho remoto, reduzindo a taxa de desocupação nesse grupo da população. Da mesma forma, empregos que exigem
+            menor qualificação estão mais relacionados a trabalhos manuais, que foram mais afetados pelas restrições de distanciamento social.
+
+            Portanto, mais uma vez os dados do PNAD COVID-19 apontam que a parcela mais pobre da população estava especialmente vulnerável no 
+            período da pandemia.
+            '''
+
     with tab2_03:
         '''
 
