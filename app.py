@@ -899,8 +899,8 @@ with tab2:
                 '''
         if st.button(f"Carregar Gráfico {num}", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "grafico medidas restricao"
-                components.iframe(src, width = 700, height = 700, scrolling = False)
+                src = "https://cryptohub.com.br/DataFrame/questao_9_Variacaoo restricoes de distanciamento social.html"
+                components.iframe(src, width = 1000, height = 500, scrolling = False)
                 time.sleep(2)
 
             '''
