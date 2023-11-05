@@ -1335,8 +1335,8 @@ with tab2:
                 '''  
         if st.button(f"Carregar Gráfico {num}", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "plot sintomaticos por setor trabalho"
-                components.iframe(src, width = 700, height = 600, scrolling = False)
+                src = "https://cryptohub.com.br/DataFrame/questao_14_Sintomaticos por setor de trabalho.html"
+                components.iframe(src, width = 700, height = 400, scrolling = False)
                 time.sleep(2)
 
                 '''
