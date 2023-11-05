@@ -757,7 +757,7 @@ with tab2:
         if st.button(f"Carregar Gráfico {num}", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "https://cryptohub.com.br/DataFrame/questao_8_Relação entre escolaridade e taxa de desocupação.html"
-                components.iframe(src, width = 1300, height = 700, scrolling = False)
+                components.iframe(src, width = 1300, height = 600, scrolling = False)
                 time.sleep(2)
 
             '''
