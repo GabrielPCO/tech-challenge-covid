@@ -697,7 +697,7 @@ with tab2:
 
             2. Na semana passada, por pelo menos uma hora, trabalhou ou fez algum bico?
             '''
-            if st.button(f"Programação { num }", type="secondary"):
+            if st.button(f"Programação {num}", type="secondary"):
                 '''
                 ### SQL
                 ```sql
@@ -755,7 +755,7 @@ with tab2:
                 fig.show()
                 ```
                 '''
-        if st.button(f"Carregar Gráfico{num}", type="primary"):
+        if st.button(f"Carregar Gráfico {num}", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
                 src = "grafico taxa desocupacao"
                 components.iframe(src, width = 700, height = 700, scrolling = False)
@@ -784,7 +784,7 @@ with tab2:
         ### Distribuição dos entrevistados pelo Brasil que apresentaram sintomas de covid-19
 
         '''
-        num+=2
+        num+=1
         with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
             '''
             **Como estão distribuidos os entrevistados que apresentaram sintomas de COVID-19?**
