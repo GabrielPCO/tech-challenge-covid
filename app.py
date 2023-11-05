@@ -636,7 +636,7 @@ with tab2:
             Santa Catarina é um estado a se destacar, pois mesmo com uma população pequena, teve grande número de entrevistados que pagam a faixa de aluguel mais alta,
             sugerindo que se trata de uma UF mais desenvolvida socioeconomicamente e com custo de vida elevado.
 
-            Além disso, no geral a maioria dos entrevistados pagam de R$301 a R$600 reais de aluguel, entre os quais a maioria é de Minas Gerais. A faixa de valor mais baixa, de R$101 a R$300, possui 4 estados
+            Além disso, no geral a maioria dos entrevistados pagam de 301 a 600 reais de aluguel, entre os quais a maioria é de Minas Gerais. A faixa de valor mais baixa, de 101 a 300 reais, possui 4 estados
             do Nordeste entre as UFs com maior número de entrevistados, ou seja, são estados com população mais carente e que dependem ainda mais da infraestrutura de saúda pública.
             '''
         st.divider()
@@ -794,7 +794,7 @@ with tab2:
 
             1. Mês da pesquisa
 
-            2. Na semana passada, devido à pandemia do Coronavírus, em que medida o(a) Sr(a) restringiu o contato com as pessoas? 
+            2. Na semana passada, devido à pandemia do Coronavírus, em que medida o(a) Sr.(a) restringiu o contato com as pessoas? 
             '''
             if st.button(f"Programação {num}", type="secondary"):
                 '''
@@ -909,8 +909,8 @@ with tab2:
             O gráfico de linhas acima aponta uma notícia muito positiva, de que o número de pessoas praticando nenhum tipo de restrição
             social durante a pandemia era insignificativo, mostrando que a população foi minimamente orientada.
 
-            Por outro lado, a maior parte dos entrevistados informou estar adotando poucas restrições de distanciamento social entre Setembro
-            e Outubro de 2020. Possivelmente a necessidade da população continuar trabalhando e a natureza de seus empregos, 
+            Por outro lado, a maior parte dos entrevistados informou estar adotando poucas restrições de distanciamento social entre setembro
+            e outubro de 2020. Possivelmente a necessidade de a população continuar trabalhando e a natureza de seus empregos, 
             como é o caso do setor de serviços, não permitiu que tais pessoas pudessem adotar medidas mais restritivas.
 
             Outra informação relevante deste gráfico é a comparação entre os três meses analisados. Observa-se que há uma
@@ -1253,6 +1253,31 @@ with tab3:
     '''
 
     ## Conclusões
+
+    Como apontado anteriormente neste documento, optamos por avaliar três meses de dados da Pesquisa Nacional por Amostra de Domicílios (PNAD – COVID19) de 2020. Nosso intuito com esse trabalho é ponderar e apontar as principais ações que hospitais devem tomar em caso de um novo surto de COVID-19.
+
+    Inicialmente, caracterizamos a população do nosso foco de pesquisa. Avaliámos que a população é predominante composta por adultos, algo saudável do ponto de vista demográfico. Porém, dentre os entrevistados existe uma parcela razoável de pessoas dentro do grupo de risco da doença, principalmente mulheres de faixa etária mais elevadas.
+
+    Outro ponto importante é que a grande maioria dos entrevistados residem em zonas urbanas de grande concentração populacional. Em especial, temos cinco estados de maior risco devido ao alto número de indivíduos residindo em grandes cidades dentro de nossa análise. São eles: Amapá, Amazonas, Distrito Federal, Goiás e Rio de Janeiro.
+
+    Acreditamos que em relação a esses pontos as principais medidas de prevenção e controle que deveriam ser tomadas pelos hospitais são: a criação e promoção de campanhas de conscientização sobre os métodos de proteção contra a covid principalmente voltados as questões de distanciamento social, a não aglomeração, o uso de máscaras com seus cuidados derivados e a correta higienização das mãos. Esses pontos são de extrema importância para a prevenção e controle da doença, especialmente em grandes centros urbanos. Além disso, é importante o planejamento e a organização de um atendimento prioritário para mulheres de idades mais avançadas, pois essas são uma significativa parcela dos pacientes em grupo de risco da pesquisa.
+
+    Em relação aos dados socioeconômicos pudemos notar que, em sua maioria, os entrevistados se encontram nas classes sociais baixa e média, respectivamente. Além disso, os entrevistados com menores taxas de escolaridade apresentam maiores taxas de desocupação, indicando novamente que a parcela mais pobre da população ficou especialmente vulnerável no período da pandemia. Dentre os três meses analisados, a variação do distanciamento social concentrou-se na faixa de pouca ou moderada restrição praticada por parte dos entrevistados durante a pandemia.
+
+    Desse modo, o foco de imunização e conscientização deve ser aplicado com mais afinco principalmente nas populações mais humildes e periféricas por se tratar de uma medida muito mais efetiva dentro da nossa análise.
+
+    Quanto aos sintomas apresentados pelos entrevistados da pesquisa, podemos notar uma clara evolução da doença em todo território nacional. Inicialmente, no mês de setembro, a maior concentração dos casos ocorreu no Centro-Oeste. Em seguida em outubro houve mais casos no sul do país. Finalmente uma migração de casos para a região norte.
+
+    Sintomas como febre, tosse e dor na cabeça foram apresentados por um número expressivo dos entrevistados. Nesse período, os estados mais afetados por tais sintomas foram Goiás, Mato Grosso, Pará, Rondônia e Roraima. Em especial Roraima apresentou a maior proporção de casos na análise dos dados.
+
+    Dentre os sintomas de febre, tosse, perda de olfato/paladar, observamos que a maioria dos entrevistados que apresentou um ou mais desses sintomas não procurou atendimento médico no período analisado. Entretanto, nos meses de outubro e novembro tivemos uma queda na proporção entre entrevistados que procuraram atendimento e os que não procuraram. Isso pode indicar uma maior conscientização dos perigos da doença e dos benefícios dos tratamentos dela.
+
+    Nota-se que os sintomas de febre e tosse foram muito mais frequentes na população da pesquisa, sendo que cerca de aproximadamente 2% dos entrevistados apresentou algum desses sintomas. Isso então se torna um bom indicador para hospitais e autoridades entenderem o tamanho da demanda por leitos que pode existir em cada região do país.
+
+    Em suma, é necessário o esclarecimento da gravidade da covid-19 e dos métodos de prevenção e tratamento da doença para que não ocorra novamente o desenvolvimento de uma pandemia em território nacional. Hospitais em geral devem estar preparados e apresentar leitos suficientes para uma demanda alta de pessoas que em geral podem apresentar sintomas de febre e tosse. É também essencial a reserva de quantidade suficiente de oxigênio hospitalar, substância vital para o tratamento eficaz de pacientes com COVID-19 hospitalizados. 
+
+    Em conclusão, a melhor arma contra uma próxima pandemia é a urgente conscientização geral da população sobre os perigos da covid-19 para a saúde humana. Esse passo é essencial para a prevenção e diminuição dos casos da doença. Ao mesmo tempo, hospitais devem estar preparados armazenado material hospitalar adequado para o tratamento de covid-19, treinando e especializando funcionários para o combate à doença e organizando a aplicação de testes para a detecção da doença o mais rápido possível na suspeita do início de uma nova pandemia.
+
     '''
 with tab4:
     '''
