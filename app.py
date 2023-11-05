@@ -774,6 +774,152 @@ with tab2:
             Portanto, mais uma vez os dados do PNAD COVID-19 apontam que a parcela mais pobre da população estava especialmente vulnerável no 
             período da pandemia.
             '''
+        st.divider()
+        '''
+        ### Variação das medidas de distanciamento social
+        '''
+        num+=1
+        with st.expander(f"Questão {num} (clique para expandir/retrair)", expanded=False):
+            '''
+            **Como as medidas de restrição de contato social variaram entre a população da pesquisa durante os meses avaliados?**
+
+            Antes do desenvolvimento de vacinas para o vírus da COVID-19, medidas de distanciamento social eram ferramentas essenciais
+            para o controle da pandemia do ponto de vista clínico.
+
+            Entretanto, ter efetividade neste tipo de ação depende que toda a população seja conscientizada e entenda a importância
+            de tais medidas. Além disso, com o passar dos meses, foi perceptível a progressiva redução das medidas de distanciamento,
+            algo natural tendo em vista todas as questões psicológicas que envolvem o distanciamento social.
+
+            Questionário:
+
+            1. Mês da pesquisa
+
+            2. Na semana passada, devido à pandemia do Coronavírus, em que medida o(a) Sr(a) restringiu o contato com as pessoas? 
+            '''
+            if st.button(f"Programação {num}", type="secondary"):
+                '''
+                ### SQL
+                ```sql
+                with cont_restricoes as
+                (SELECT 
+                    B011, V1013, COUNT(*) as n_entrevistados
+                FROM
+                    `{project_id}.{dataset_id}.{table_id}`
+                WHERE B011 != 9
+                GROUP BY V1013, B011
+                ORDER BY V1013)
+
+                SELECT
+                    V1013,
+                    B011,
+                    n_entrevistados,
+                    ROUND(SUM(n_entrevistados)/SUM(n_entrevistados) OVER (PARTITION BY V1013),4) AS proportion
+                FROM
+                    cont_restricoes
+                GROUP BY
+                    V1013, B011,n_entrevistados
+                ORDER BY V1013
+                ```
+
+                ### Python
+                ```python
+
+                dict_restricao_contato = {'1':'Sem restrições', '2':'Poucas restrições', '3':'Restrições moderadas', '4':'Muitas restrições', '9':'Sem resposta'}
+                dict_mes = {'9':'Setembro/2020', '10':'Outubro/2020', '11':'Novembro/2020'}
+
+                df_results['mes'] = df_results['mes'].astype(str).replace(dict_mes)
+                df_results['restricao_contato'] = df_results['restricao_contato'].astype(str).replace(dict_restricao_contato)
+
+                dict_sort = {'Sem restrições':0, 'Poucas restrições':1, 'Restrições moderadas':2, 'Muitas restrições':3,'Sem resposta':4}
+                df_results.sort_values(by='restricao_contato', key=lambda x: x.map(dict_sort), inplace=True)
+                df_results.reset_index(drop=True, inplace=True)
+
+                # Create a line chart using Plotly graph objects
+                fig = go.Figure()
+
+                # Variable 1
+                fig.add_trace(go.Scatter(
+                    x=df_results.loc[df_results['mes']=='Setembro/2020']['restricao_contato'], # x-axis
+                    y=df_results.loc[df_results['mes']=='Setembro/2020']['n_entrevistados'], # y-axis
+                    mode='lines+markers', # Connect data points with lines and add markers
+                    name='Setembro/2020', # Name in the legend
+
+                    line=dict(
+                        color=px.colors.qualitative.G10[0],        # Change the line color to red
+                        width=5),
+                    
+                    marker=dict(
+                        symbol='circle',    # Change the marker symbol to a circle
+                        size=5,            # Set the marker size
+                        color=px.colors.qualitative.G10[0]),       # Set the marker color             # Set the line width
+                ))
+
+                # Variable 2
+                fig.add_trace(go.Scatter(
+                    x=df_results.loc[df_results['mes']=='Outubro/2020']['restricao_contato'], # x-axis
+                    y=df_results.loc[df_results['mes']=='Outubro/2020']['n_entrevistados'], # y-axis
+                    mode='lines+markers', # Connect data points with lines and add markers
+                    name='Outubro/2020', # Name in the legend
+
+                    line=dict(
+                        color=px.colors.qualitative.G10[1],        # Change the line color to red
+                        width=5),
+                    
+                    marker=dict(
+                        symbol='circle',    # Change the marker symbol to a circle
+                        size=5,            # Set the marker size
+                        color=px.colors.qualitative.G10[1]),       # Set the marker color             # Set the line width
+                ))
+
+                # Variable 3
+                fig.add_trace(go.Scatter(
+                    x=df_results.loc[df_results['mes']=='Novembro/2020']['restricao_contato'], # x-axis
+                    y=df_results.loc[df_results['mes']=='Novembro/2020']['n_entrevistados'], # y-axis
+                    mode='lines+markers', # Connect data points with lines and add markers
+                    name='Novembro/2020', # Name in the legend
+
+                    line=dict(
+                        color=px.colors.qualitative.G10[2],        # Change the line color to red
+                        width=5),
+                    
+                    marker=dict(
+                        symbol='circle',    # Change the marker symbol to a circle
+                        size=5,            # Set the marker size
+                        color=px.colors.qualitative.G10[2]),       # Set the marker color             # Set the line width
+                ))
+
+                fig.update_layout(width=1800, height=600, title='Variação das restrições de distanciamento social<br>PNAD COVID-19', title_x=0.5,
+                                yaxis_title="Nº de entrevistados", xaxis_title='Nível de restrição',
+                                legend=dict(x=0.03,y=0.95,bgcolor='rgba(0,0,0,0)'))
+
+                fig.update_yaxes(tickformat=",.0f", range=[0,180000])
+
+                fig.show()
+                ```
+                '''
+        if st.button(f"Carregar Gráfico {num}", type="primary"):
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                src = "grafico medidas restricao"
+                components.iframe(src, width = 700, height = 700, scrolling = False)
+                time.sleep(2)
+
+            '''
+            ### Análise
+
+            O gráfico de linhas acima aponta uma notícia muito positiva, de que o número de pessoas praticando nenhum tipo de restrição
+            social durante a pandemia era insignificativo, mostrando que a população foi minimamente orientada.
+
+            Por outro lado, a maior parte dos entrevistados informou estar adotando poucas restrições de distanciamento social entre Setembro
+            e Outubro de 2020. Possivelmente a necessidade da população continuar trabalhando e a natureza de seus empregos, 
+            como é o caso do setor de serviços, não permitiu que tais pessoas pudessem adotar medidas mais restritivas.
+
+            Outra informação relevante deste gráfico é a comparação entre os três meses analisados. Observa-se que há uma
+            tendência de queda no número de entrevistados que informaram adotar medidas mais restritivas de distanciamento. Portanto, os órgãos 
+            públicos e estabelecimentos de saúde em geral devem ter em mente que, com o passar do tempo em uma pandemia, a população tende a
+            naturalmente afrouxar seus cuidados e voltar a viver normalmente, mesmo com o risco de infecção.
+
+            Portanto, imunizar a população o mais rápido possível deve ser prioridade, por se tratar de uma medida muito mais efetiva.
+            '''
 
     with tab2_03:
         '''
