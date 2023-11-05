@@ -159,7 +159,7 @@ with tab1:
 
     Para a nossa análise utilizamos uma quantidade relativamente massiva de dados. Desse modo, será necessário aplicar algumas técnicas especiais para o manuseio dos dados.
 
-    Para facilitar a manipulação dos dados, decidimos criar uma tabela em banco de dados relacional para armazenar nosso dados.
+    Para facilitar a manipulação dos dados, decidimos criar uma tabela em banco de dados relacional para armazenar nossos dados.
     
     Escolhemos o sistema gerenciador de banco de dados PostgresSQL.
     '''
@@ -172,7 +172,7 @@ with tab1:
 
     ## Consolidação dos dados
 
-    Como as variáves que utilizaremos como nossas colunas são equivalente entre os diferentes set de dados, podemos consolidar esses dados em uma mesma tabela.
+    Como as variáveis que utilizaremos como nossas colunas são equivalentes entre os diferentes set de dados, podemos consolidar esses dados em uma mesma tabela.
 
     Para tal, decidimos utilizar o software KNIME que é uma plataforma livre e de código aberto de análise de dados, construção de relatórios e integração de dados. Desse modo, o processo de consolidação será mais rápido e eficiente.
 
@@ -211,7 +211,7 @@ with tab2:
 
     Em cada tópico serão realizadas análises sobre o tema abordado, com o objetivo de descrever o comportamento e contexto da população brasileira durante a pandemia.
     
-    Os dados do PNAD abrangeram cerca de 193 mil domicílios por mês de pesquisa e um total de mais de 1 milhão de registros na base de dados abrangendo três mese.
+    Os dados do PNAD abrangeram cerca de 193 mil domicílios por mês de pesquisa e um total de mais de 1 milhão de registros na base de dados abrangendo três meses.
     
     A análise será separada em três categorias diferentes, sendo elas: características clínicas dos sintomas, características da população e características econômicas da sociedade. 
     '''
@@ -232,7 +232,7 @@ with tab2:
             '''
             **Como a população da pesquisa está distribuída quanto ao sexo e faixa etária?**
 
-            A Pirâmide Etária é uma importante ferramente de análises demográficas, pois permite caracterizar diversos aspectos da população como natalidade,
+            A Pirâmide Etária é uma importante ferramenta de análises demográficas, pois permite caracterizar diversos aspectos da população como natalidade,
             longevidade, além de permitir traçar cenários futuros para a população do país.
 
             Do ponto de vista da pandemia auxilia a delimitar e quantificar grupos de risco existentes na população, como por exemplo pessoas acima dos 60 anos.
@@ -355,7 +355,7 @@ with tab2:
                 '''
                 ## Análise
 
-                Pode-se dizer que a Pirâmide Etária é saúdável do ponto de vista demográfico pois a maioria da população está concentrada no meio da pirâmide, ou seja na fase adulta, o que significa
+                Pode-se dizer que a Pirâmide Etária é saudável do ponto de vista demográfico pois a maioria da população está concentrada no meio da pirâmide, ou seja na fase adulta, o que significa
                 que economicamente há pessoas disponíveis para trabalhar e, comparando com cenários de décadas passadas, há menor mortalidade entre os mais jovens.
 
                 Ainda assim, há uma porcentagem grande da população com menos de 20 anos, principalmente homens, portanto há margem de crescimento nos próximos anos para as faixas etárias do meio da pirâmide.
@@ -373,7 +373,7 @@ with tab2:
         num+=1
         with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
             '''        
-            **Como está distribuida a população da pesquisa em questão de situação de domicílio?**
+            **Como está distribuída a população da pesquisa em questão de situação de domicílio?**
 
             Plotamos os dados de domicílio da população de entrevistados nos três meses avaliados, separando entre situação urbana e rural.
 
@@ -430,7 +430,7 @@ with tab2:
         num+=1
         with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
             '''
-            **Como está distribuida a população da pesquisa nas UFs do Brasil quanto à região de moradia?**
+            **Como está distribuída a população da pesquisa nas UFs do Brasil quanto à região de moradia?**
 
             Com o objetivo de analisar mais a fundo a questão da distribuição da população no território brasileiro, o gráfico abaixo permite identificar os estados em que a população
             está altamente concentrada em polos político-econômicos como Capitais e Regiões Metropolitanas.
@@ -489,7 +489,7 @@ with tab2:
             Novamente, os dados mostram que o Distrito Federal e o Rio de Janeiro são duas UFs com população altamente concentrada em grandes cidades. Além deles, Goiás, Amazonas e Amapá também tiveram
             mais da metade de seus entrevistados informando que moram em Capitais ou Regiões Metropolitanas.
 
-            Estas 5 UFs podem estar mais suscetíveis à ocorrência de grandes picos de contaminação, o que consequentemente podem gerar uma grande sobrecarga nos sitemas de saúde público e privado. Por isso, medidas de
+            Estas 5 UFs podem estar mais suscetíveis à ocorrência de grandes picos de contaminação, o que consequentemente podem gerar uma grande sobrecarga nos sistemas de saúde público e privado. Por isso, medidas de
             educação ou de redução de contato social entre os habitantes devem ser ainda mais úteis nesse contexto.
             '''
         st.divider()
@@ -562,7 +562,7 @@ with tab2:
 
             Já nas regiões Norte e Nordeste observa-se justamente o contrário, onde há relativamente maior proporção de pardos e pretos. A região Norte também é um caso especial devido à grande quantidade de indígenas
             que moram em estados como Amazonas e Roraima. No contexto da pandemia, estes estados devem receber cuidado especial por terem populações mais suscetíveis aos impactos socioeconômicos do COVID-19 e por
-            terem maior dependência do sitema público de saúde.
+            terem maior dependência do sistema público de saúde.
 
             '''
 
@@ -656,7 +656,7 @@ with tab2:
 
             ------------------------------------------------------------------------------------------
 
-            **Qual a renda média dos entrevistados em relação a idade e situação de domicílio**
+            **Qual a renda média dos entrevistados em relação a idade e situação de domicílio?**
 
             Questionário:
 
@@ -932,7 +932,7 @@ with tab2:
         num+=1
         with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
             '''
-            **Como estão distribuidos os entrevistados que apresentaram sintomas de COVID-19?**
+            **Como estão distribuídos os entrevistados que apresentaram sintomas de COVID-19?**
 
             Utilizamos os dados de pesquisa dos três meses para avaliar a evolução do sintoma de febre, tosse e dor na cabeça nos estados brasileiros ao longo do tempo. Esses sintomas podem indicar a presença da covid-19 no entrevistado em questão.
 
@@ -1005,7 +1005,7 @@ with tab2:
         num+=1
         with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
             '''
-            **Qual a proporção de casos de covid-19 em relação ao numero total de entrevistados dos cinco estados mais afetados?**
+            **Qual a proporção de casos de covid-19 em relação ao número total de entrevistados dos cinco estados mais afetados?**
 
             Utilizamos os dados de pesquisa dos três meses para avaliar a proporção de casos de covid-19 em relação a quantidade de entrevistados nos cinco estados mais afetados.
 
@@ -1154,7 +1154,7 @@ with tab2:
             
             ## Análise
 
-            Percebe-se que de Setembro/2020 até Novembro/2020 houve uma pequena variação no número de entrevistados que tiveram algum dos sintomas clássicos da COVID-19 (febre, tosse e perda de olfato/paladar).
+            Percebe-se que de setembro/2020 até novembro/2020 houve uma pequena variação no número de entrevistados que tiveram algum dos sintomas clássicos da COVID-19 (febre, tosse e perda de olfato/paladar).
 
             Em setembro cerca de 7,500 entrevistados tiveram algum sintoma, já em novembro esse valor foi de aproximadamente 7,000 entrevistados. Isso representa que, aproximadamente 2% da população de entrevistada
             apresentou algum dos sintomas mais comuns de COVID-19.
@@ -1163,7 +1163,7 @@ with tab2:
             
             Uma hipótese, com viés otimista, é que as pessoas estão mais conscientes dos perigos da doença e por isso estão buscando tratamento.
             
-            Outra alternativa, com olhar mais pessimista, é que os casos de COVID-19 ocorridos em outubro e novembro foram mais graves e demandaram
+            Uma alternativa, com olhar mais pessimista, é que os casos de COVID-19 ocorridos em outubro e novembro foram mais graves e demandaram
             mais estrutura hospitalar.
             '''
         st.divider()
@@ -1173,7 +1173,7 @@ with tab2:
         num+=1
         with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
             '''
-            **Entre os sintomais mais sintomas frequentes de COVID-19, qual está mais relacionado com internações?**
+            **Entre os sintomas mais sintomas frequentes de COVID-19, qual está mais relacionado com internações?**
 
             A capacidade dos sistemas de saúde, tanto públicos como privados, é um fator extremamente importante em uma pandemia, pois em picos de infecção da população pode haver falta
             de leitos e pacientes podem não receber o devido atendimento.
@@ -1252,7 +1252,7 @@ with tab2:
 with tab3:
     '''
 
-    ## Em Construção...
+    ## Conclusões
     '''
 with tab4:
     '''
