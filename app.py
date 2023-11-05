@@ -1248,7 +1248,113 @@ with tab2:
                 Significa que pouco mais de 0.02% da população acaba necessitando de internação por complicações de febre, tosse ou perda de olfato/paladar. Este número é um bom indicador para hospitais e autoridades,
                 para entender o tamanho da demanda por leitos que pode existir em cada região do país.
 
-                '''     
+                '''
+        st.divider()
+        '''
+        ### Número de entrevistados sintomáticos por setor de trabalho
+        '''
+        num+=1
+        with st.expander(f"Questão { num } (clique para expandir/retrair)", expanded=False):
+            '''
+            **Quais os setores da economia tiveram proporcionalmente mais entrevistados com sintomas de COVID-19?**
+
+            Como já foi discutido em análises anteriores, em uma pandemia é de extrema importância caracterizar os aspectos socioeconômicos
+            da população e entender como isso afeta as infecções. Para isso, esta análise busca identificar os 10 principais setores da economia 
+            quanto à taxa de entrevistados sintomáticos, partindo da premissa que, por exemplo, trabalhadores do comércio
+            têm mais contato com outras pessoas do que outras atividades e podem ter uma taxa maior.
+
+            Questionário:
+
+            1. Na semana passada teve febre?
+
+            2. Na semana passada teve tosse?
+
+            3. Na semana passada teve perda de olfato/paladar? 
+
+            4. Qual é a principal atividade do local ou empresa em que você trabalha? 
+            '''
+
+            if st.button(f"Programação { num }", type="secondary"):
+                '''
+                ### SQL
+                ```sql
+                with check_sintomas as (
+                SELECT
+                    C007D,
+                    CASE 
+                    WHEN B0012 = 1 OR B0011 = 1 OR B00111 = 1 THEN 1
+                    ELSE 0
+                    END as sintomas,
+
+                    COUNT (CASE 
+                    WHEN B0012 = 1 OR B0011 = 1 OR B00111 = 1 THEN 1
+                    ELSE 0
+                    END) as count_sintomas
+                FROM `brave-tea-400210.fase_3_tech_challenge.pnad-covid-19`
+                GROUP BY C007D, sintomas
+                )
+
+                SELECT
+                    C007D,
+                    sintomas,
+                    count_sintomas,
+                    ROUND(SUM(count_sintomas)/SUM(count_sintomas) OVER (PARTITION BY C007D),4) AS proportion_sintoma
+                FROM check_sintomas
+                WHERE C007D != 0
+                GROUP BY
+                    C007D, sintomas, count_sintomas
+                ORDER BY C007D, count_sintomas DESC
+                ```
+
+                ### Python
+                ```python
+                dict_atividade_trabalho = {'10':'Serviços de entregas', '18':'Administração pública','20':'Saúde',
+                           '24':'Serviço doméstico','16':'Escritórios','14':'Instituições financeiras','11':'Hospedagem',
+                           '15':'Imobiliárias','13':'Informação e comunicação','22':'Artes e esportes','12':'Serviços de alimentação'}
+
+                dict_sintomas = {'1':'Com sintomas', '0':'Sem sintomas'}
+
+
+                df_results = df_results.query('sintomas == 1')
+                df_results.sort_values(by='proportion_sintoma',ascending=False, inplace=True)
+                df_results.reset_index(drop=True, inplace=True)
+                df_results = df_results.loc[:10,:]
+                df_results['atividade_trabalho'] = df_results['atividade_trabalho'].astype(str).replace(dict_atividade_trabalho)
+                df_results['sintomas'] = df_results['sintomas'].astype(str).replace(dict_sintomas)
+                df_results['proportion_sintoma'] = df_results['proportion_sintoma'] * 100
+
+                fig = px.bar(df_results, x="proportion_sintoma", y="atividade_trabalho", orientation='h',
+                    color_discrete_sequence=px.colors.qualitative.G10, title='Sintomáticos por setor de trabalho<br>PNAD COVID-19',
+                    labels=dict(atividade_trabalho='', proportion_sintoma='Proporção de sintomáticos (%)'),
+                    height=400, width=700)
+
+                fig.update_layout(yaxis=dict(autorange="reversed"), title_x=0.5)
+
+                fig.show()
+                ```
+                '''  
+        if st.button(f"Carregar Gráfico {num}", type="primary"):
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                src = "plot sintomaticos por setor trabalho"
+                components.iframe(src, width = 700, height = 600, scrolling = False)
+                time.sleep(2)
+
+                '''
+                ### Análise
+
+                Todos os dez setores com maiores taxas de entrevistados sintomáticos tiveram valor superior a 2%, mas no geral os valores
+                ficaram próximos. Em primeiro lugar ficou o setor de entregas e encomendas, com 2.44% dos entrevistados apresentando algum dos
+                sintomas mais comuns de COVID-19. 
+                
+                Os dados confirmam um comportamento muito observado na sociedade brasileira durante a pandemia,
+                em que os Correios e empresas de entrega foram requisitados devido ao boom do comércio on-line.
+                Assim, possivelmente os trabalhadores deste setor ficaram mais expostos ao vírus devido ao aumento considerável da demanda.
+
+                Da mesma forma, os setores de Saúde e Administração Pública também podem ter sido afetados por este processo, já que atuaram
+                atendendo indivíduos que precisaram de auxílio social ou atendimento médico. Neste ponto, os trabalhadores da Saúde
+                devem ser tratados com cuidado especial por estarem na linha de frente do combate ao vírus e com mais trabalhadores
+                do setor com sintomas de COVID-19, menor a capacidade de atendimento dos hospitais e postos de saúde.
+                '''
 with tab3:
     '''
 
