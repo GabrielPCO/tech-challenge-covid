@@ -675,8 +675,7 @@ with tab2:
         '''
         ### Taxa de desocupação por escolaridade
         '''
-        num+=1
-        num+=1
+        num+=2
         with st.expander(f"Questão {num} (clique para expandir/retrair)", expanded=False):
             '''
             **Qual a relação entre taxa de desocupação e escolaridade da população da pesquisa?**
@@ -757,8 +756,8 @@ with tab2:
                 '''
         if st.button(f"Carregar Gráfico {num}", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "grafico taxa desocupacao"
-                components.iframe(src, width = 700, height = 700, scrolling = False)
+                src = "https://cryptohub.com.br/DataFrame/questao_8_Relação entre escolaridade e taxa de desocupação.html"
+                components.iframe(src, width = 1300, height = 600, scrolling = False)
                 time.sleep(2)
 
             '''
