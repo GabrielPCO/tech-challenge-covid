@@ -1,6 +1,4 @@
 # Libs
-
-import pandas as pd
 import time
 
 # libs gráficas
@@ -10,6 +8,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import streamlit.components.v1 as components
 
+# variável para a contagem automática dos gráficos
 num = 0
 
 # Configurando a página
@@ -23,10 +22,18 @@ st.set_page_config(
     }
 )
 
-# Função para a leitura da base de dados
-@st.cache_data
-def read_csv_file(file):
-    return pd.read_csv(file)
+# Função de cache dos gráficos
+@st.cache_data(show_spinner="Carregando o gráfico. Aguarde...")
+def waitForResourceAvailable(src, wframe, hframe):
+    timer = 0
+    content = components.iframe(src, width = wframe, height = hframe, scrolling = False)
+    while not content:
+        time.sleep(1)
+        timer += 1
+        if timer > 10:
+            return st.markdown(f"**:red[Erro]**: Tempo de resposta esgotado! Acesse o gráfico no link: {src}")
+        if content:
+            return content
 
 # Titulo de Página
 st.title('Análise de dados: explorando dados da Pesquisa Nacional por Amostra de Domicílios (PNAD) COVID19')
@@ -47,7 +54,7 @@ st.markdown(
     """, unsafe_allow_html=True
 )
 
-# Carregamento de imagens por cach
+# Carregamento de imagens por cache
 @st.cache_data
 def load_img(img):
     return plt.imread(img)
@@ -347,24 +354,19 @@ with tab2:
                 ```
                 '''
         if st.button(f'Carregar Gráfico { num }', type='primary'):
-            with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "https://cryptohub.com.br/DataFrame/questao_1_população_Piramide_Etaria.html"
-                components.iframe(src, width = 1000, height = 700, scrolling = False)
-                time.sleep(2)
+            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_1_população_Piramide_Etaria.html", 1000, 700)
+            '''
+            ## Análise
 
-                '''
-                ## Análise
+            Pode-se dizer que a Pirâmide Etária é saudável do ponto de vista demográfico pois a maioria da população está concentrada no meio da pirâmide, ou seja na fase adulta, o que significa
+            que economicamente há pessoas disponíveis para trabalhar e, comparando com cenários de décadas passadas, há menor mortalidade entre os mais jovens.
 
-                Pode-se dizer que a Pirâmide Etária é saudável do ponto de vista demográfico pois a maioria da população está concentrada no meio da pirâmide, ou seja na fase adulta, o que significa
-                que economicamente há pessoas disponíveis para trabalhar e, comparando com cenários de décadas passadas, há menor mortalidade entre os mais jovens.
+            Ainda assim, há uma porcentagem grande da população com menos de 20 anos, principalmente homens, portanto há margem de crescimento nos próximos anos para as faixas etárias do meio da pirâmide.
 
-                Ainda assim, há uma porcentagem grande da população com menos de 20 anos, principalmente homens, portanto há margem de crescimento nos próximos anos para as faixas etárias do meio da pirâmide.
-
-                Do ponto de vista dos grupos de risco do COVID-19, os dados mostram que a maior parte dos entrevistados têm entre 61 e 70 anos e uma parcela pequena da população possui mais de 80 anos.
-                Neste ponto, é importante destacar que há uma grande predominância de mulheres nas faixas etárias mais elevadas, indicando que o sexo feminino possui maior longevidade e possivelmente será o perfil
-                mais comum nos casos graves envolvendo grupos de risco COVID-19.
-                
-                '''
+            Do ponto de vista dos grupos de risco do COVID-19, os dados mostram que a maior parte dos entrevistados têm entre 61 e 70 anos e uma parcela pequena da população possui mais de 80 anos.
+            Neste ponto, é importante destacar que há uma grande predominância de mulheres nas faixas etárias mais elevadas, indicando que o sexo feminino possui maior longevidade e possivelmente será o perfil
+            mais comum nos casos graves envolvendo grupos de risco COVID-19.
+            '''
         st.divider()
 
         '''
@@ -404,11 +406,8 @@ with tab2:
                 fig_3.show()
                 ```
                 '''
-        if st.button(f"Carregar Gráfico { num }", type="primary"):
-            with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "https://cryptohub.com.br/DataFrame/br_distribuicao_populacao.html"
-                components.iframe(src, width = 700, height = 700, scrolling = False)
-                time.sleep(2)
+        if st.button(f"Carregar Gráfico { num }", type="primary"):        
+            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/br_distribuicao_populacao.html", 700, 700)
             '''
             
             ## Análise
@@ -422,7 +421,6 @@ with tab2:
             como o COVID-19. Portanto, estados em que a população está mais concentrada em zonas urbanas podem ser mais vulneráveis.
 
             Por outro lado, zonas rurais possuem menos infraestrutura hospitalar, portanto casos graves ocorridos nessas regiões devem receber atenção especial.
-
             '''
         st.divider()
         
@@ -478,11 +476,7 @@ with tab2:
                 ```
                 '''
         if st.button(f"Carregar Gráfico { num }", type="primary"):
-            with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "https://cryptohub.com.br/DataFrame/questao_2_populacao_Distribuição da população da pesquisa por região de moradia.html"
-                components.iframe(src, width = 1200, height = 700, scrolling = False)
-                time.sleep(2)
-            
+            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_2_populacao_Distribuição da população da pesquisa por região de moradia.html", 1200, 700)     
             '''
             ## Análise
 
@@ -549,10 +543,7 @@ with tab2:
                 ```
                 '''
         if st.button(f'Carregar gráfico { num }', type='primary'):
-            with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "https://cryptohub.com.br/DataFrame/questao_4_populacao_Distribuição da populacao da pesquisa por cor-raça.html"
-                components.iframe(src, width = 1200, height = 700, scrolling = False)
-                time.sleep(2)
+            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_4_populacao_Distribuição da populacao da pesquisa por cor-raça.html", 1200, 700)
             '''
             ### Análise
 
@@ -563,9 +554,7 @@ with tab2:
             Já nas regiões Norte e Nordeste observa-se justamente o contrário, onde há relativamente maior proporção de pardos e pretos. A região Norte também é um caso especial devido à grande quantidade de indígenas
             que moram em estados como Amazonas e Roraima. No contexto da pandemia, estes estados devem receber cuidado especial por terem populações mais suscetíveis aos impactos socioeconômicos do COVID-19 e por
             terem maior dependência do sistema público de saúde.
-
             '''
-
     with tab2_02:
         '''
 
@@ -624,10 +613,7 @@ with tab2:
                 '''
 
         if st.button(f"Carregar Gráfico { num }", type="primary"):
-            with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "https://cryptohub.com.br/DataFrame/br_faixa_aluguel.html"
-                components.iframe(src, width = 700, height = 700, scrolling = False)
-                time.sleep(2)
+            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/br_faixa_aluguel.html", 700, 700)
             '''
             
             ## Análise
@@ -755,11 +741,7 @@ with tab2:
                 ```
                 '''
         if st.button(f"Carregar Gráfico {num}", type="primary"):
-            with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "https://cryptohub.com.br/DataFrame/questao_8_Relação entre escolaridade e taxa de desocupação.html"
-                components.iframe(src, width = 1300, height = 600, scrolling = False)
-                time.sleep(2)
-
+            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_8_Relação entre escolaridade e taxa de desocupação.html", 1300, 600)
             '''
             ### Análise
 
@@ -898,11 +880,7 @@ with tab2:
                 ```
                 '''
         if st.button(f"Carregar Gráfico {num}", type="primary"):
-            with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "https://cryptohub.com.br/DataFrame/questao_9_Variacaoo restricoes de distanciamento social.html"
-                components.iframe(src, width = 1000, height = 500, scrolling = False)
-                time.sleep(2)
-
+            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_9_Variacaoo restricoes de distanciamento social.html", 1000, 500)
             '''
             ### Análise
 
@@ -985,10 +963,7 @@ with tab2:
                 '''
 
         if st.button(f"Carregar Gráfico { num }", type="primary"):
-            with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "https://cryptohub.com.br/DataFrame/br_mapa_casos_febre.html"
-                components.iframe(src, width = 700, height = 800, scrolling = False)
-                time.sleep(5)
+            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/br_mapa_casos_febre.html",700,800)      
             '''
             
             ## Análise
@@ -996,7 +971,6 @@ with tab2:
             Pelo gráfico, podemos notar que houve uma evolução da quantidade de pessoas que afirmaram ter febre, tosse e dor de cabeça na semana anterior à data da pesquisa. 
             Em setembro notamos uma maior concentração de casos no Centro-Oeste. De setembro para outubro podemos ver uma evolução dos sintomas no sul do país. 
             De outubro para novembro a evolução é mais visível no Norte, com a região Sudeste e Santa Catarina se mantendo com elevados número de casos.
-            
             '''
         st.divider()
         '''
@@ -1076,10 +1050,7 @@ with tab2:
                 '''
 
         if st.button(f"Carregar Gráfico { num }", type="primary"):
-            with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "https://cryptohub.com.br/DataFrame/br_porcentagem_casos.html"
-                components.iframe(src, width = 700, height = 800, scrolling = False)
-                time.sleep(2)
+            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/br_porcentagem_casos.html", 700, 800)
             '''
             
             ## Análise
@@ -1087,7 +1058,6 @@ with tab2:
             Pelo gráfico, podemos perceber que o estado com maior proporção de casos de covid-19 por número de entrevistados foi Roraima.
 
             Pela proporcionalidade, podemos notar que esses cinco estados foram os mais afetados pela covid-19 nos meses de setembro, outubro e novembro de 2020.
-            
             '''
         st.divider()
         '''
@@ -1146,10 +1116,7 @@ with tab2:
                 ```
                 '''
         if st.button(f"Carregar Gráfico { num }", type="primary"):
-            with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "https://cryptohub.com.br/DataFrame/questao_6_Procura de atendimento por entrevistados sintomaticos.html"
-                components.iframe(src, width = 700, height = 600, scrolling = False)
-                time.sleep(2)
+            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_6_Procura de atendimento por entrevistados sintomaticos.html", 700, 600)
             '''
             
             ## Análise
@@ -1229,26 +1196,22 @@ with tab2:
                 '''
 
         if st.button(f"Carregar Gráfico { num }", type="primary"):
-            with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "https://cryptohub.com.br/DataFrame/questao_7_Numero de internados de acordo com tipo de sintoma.html"
-                components.iframe(src, width = 700, height = 600, scrolling = False)
-                time.sleep(2)
-                '''
-                
-                ## Análise
+            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_7_Numero de internados de acordo com tipo de sintoma.html", 700, 600)
+            '''
+            
+            ## Análise
 
-                Fica claro ao analisar o gráfico que os sintomas de febre e tosse são muito mais frequentes na população da pesquisa, e possuem valores bem próximos de cerca de 3,000 pacientes cada
-                entre internados e não internados. Enquanto isso, cerca de 1,400 entrevistados informaram ter sofrido com perda de olfato/paladar, possivelmente um número menor tanto por ser um sintoma mais único
-                da COVID-19 como por ser um sintoma mais difícil de ser percebido pelos pacientes.
+            Fica claro ao analisar o gráfico que os sintomas de febre e tosse são muito mais frequentes na população da pesquisa, e possuem valores bem próximos de cerca de 3,000 pacientes cada
+            entre internados e não internados. Enquanto isso, cerca de 1,400 entrevistados informaram ter sofrido com perda de olfato/paladar, possivelmente um número menor tanto por ser um sintoma mais único
+            da COVID-19 como por ser um sintoma mais difícil de ser percebido pelos pacientes.
 
-                Analisando a proporção de pacientes internados por sintoma, o sintoma de febre é também o de maior proporção, com 10.8% dos entrevistados internados, seguido de perda de olfato/paladar com 10.7%
-                e por último tosse com 10.3%.
+            Analisando a proporção de pacientes internados por sintoma, o sintoma de febre é também o de maior proporção, com 10.8% dos entrevistados internados, seguido de perda de olfato/paladar com 10.7%
+            e por último tosse com 10.3%.
 
-                É possível relacionar estes valores com a questão anterior, em que foi constatado que aproximadamente 2% da população da pesquisa apresentou algum tipo de sintoma COVID-19 nos três meses da análise.
-                Significa que pouco mais de 0.02% da população acaba necessitando de internação por complicações de febre, tosse ou perda de olfato/paladar. Este número é um bom indicador para hospitais e autoridades,
-                para entender o tamanho da demanda por leitos que pode existir em cada região do país.
-
-                '''
+            É possível relacionar estes valores com a questão anterior, em que foi constatado que aproximadamente 2% da população da pesquisa apresentou algum tipo de sintoma COVID-19 nos três meses da análise.
+            Significa que pouco mais de 0.02% da população acaba necessitando de internação por complicações de febre, tosse ou perda de olfato/paladar. Este número é um bom indicador para hospitais e autoridades,
+            para entender o tamanho da demanda por leitos que pode existir em cada região do país.
+            '''
         st.divider()
         '''
         ### Número de entrevistados sintomáticos por setor de trabalho
@@ -1334,27 +1297,24 @@ with tab2:
                 ```
                 '''  
         if st.button(f"Carregar Gráfico {num}", type="primary"):
-            with st.spinner("Carregando o gráfico. Aguarde..."):
-                src = "https://cryptohub.com.br/DataFrame/questao_14_Sintomaticos por setor de trabalho.html"
-                components.iframe(src, width = 700, height = 400, scrolling = False)
-                time.sleep(2)
+            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_14_Sintomaticos por setor de trabalho.html", 700, 400)
 
-                '''
-                ### Análise
+            '''
+            ### Análise
 
-                Todos os dez setores com maiores taxas de entrevistados sintomáticos tiveram valor superior a 2%, mas no geral os valores
-                ficaram próximos. Em primeiro lugar ficou o setor de entregas e encomendas, com 2.44% dos entrevistados apresentando algum dos
-                sintomas mais comuns de COVID-19. 
-                
-                Os dados confirmam um comportamento muito observado na sociedade brasileira durante a pandemia,
-                em que os Correios e empresas de entrega foram requisitados devido ao boom do comércio on-line.
-                Assim, possivelmente os trabalhadores deste setor ficaram mais expostos ao vírus devido ao aumento considerável da demanda.
+            Todos os dez setores com maiores taxas de entrevistados sintomáticos tiveram valor superior a 2%, mas no geral os valores
+            ficaram próximos. Em primeiro lugar ficou o setor de entregas e encomendas, com 2.44% dos entrevistados apresentando algum dos
+            sintomas mais comuns de COVID-19. 
+            
+            Os dados confirmam um comportamento muito observado na sociedade brasileira durante a pandemia,
+            em que os Correios e empresas de entrega foram requisitados devido ao boom do comércio on-line.
+            Assim, possivelmente os trabalhadores deste setor ficaram mais expostos ao vírus devido ao aumento considerável da demanda.
 
-                Da mesma forma, os setores de Saúde e Administração Pública também podem ter sido afetados por este processo, já que atuaram
-                atendendo indivíduos que precisaram de auxílio social ou atendimento médico. Neste ponto, os trabalhadores da Saúde
-                devem ser tratados com cuidado especial por estarem na linha de frente do combate ao vírus e com mais trabalhadores
-                do setor com sintomas de COVID-19, menor a capacidade de atendimento dos hospitais e postos de saúde.
-                '''
+            Da mesma forma, os setores de Saúde e Administração Pública também podem ter sido afetados por este processo, já que atuaram
+            atendendo indivíduos que precisaram de auxílio social ou atendimento médico. Neste ponto, os trabalhadores da Saúde
+            devem ser tratados com cuidado especial por estarem na linha de frente do combate ao vírus e com mais trabalhadores
+            do setor com sintomas de COVID-19, menor a capacidade de atendimento dos hospitais e postos de saúde.
+            '''
 with tab3:
     '''
 
