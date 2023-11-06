@@ -23,17 +23,18 @@ st.set_page_config(
 )
 
 # Função de cache dos gráficos
-@st.cache_data(show_spinner="Carregando o gráfico. Aguarde...")
+@st.cache_data(show_spinner=False)
 def waitForResourceAvailable(src, wframe, hframe):
-    timer = 0
-    content = components.iframe(src, width = wframe, height = hframe, scrolling = False)
-    while not content:
-        time.sleep(1)
-        timer += 1
-        if timer > 10:
-            return st.markdown(f"**:red[Erro]**: Tempo de resposta esgotado! Acesse o gráfico no link: {src}")
-        if content:
-            return content
+    with st.spinner("Carregando o gráfico. Aguarde..."):
+        timer = 0
+        content = components.iframe(src, width = wframe, height = hframe, scrolling = False)
+        while not content:
+            time.sleep(1)
+            timer += 1
+            if timer > 10:
+                return st.markdown(f"**:red[Erro]**: Tempo de resposta esgotado! Acesse o gráfico no link: {src}")
+            if content:
+                return content
 
 # Titulo de Página
 st.title('Análise de dados: explorando dados da Pesquisa Nacional por Amostra de Domicílios (PNAD) COVID19')
@@ -630,38 +631,80 @@ with tab2:
         ### Distribuição de sexo, idade e renda dos entrevistados
         '''
         num+=1
-        with st.expander(f"Questões { num } & { num+1} (clique para expandir/retrair)", expanded=False):
+        with st.expander(f"Questões { num }, { num+1 } & { num+2} (clique para expandir/retrair)", expanded=False):
             '''         
-            **Qual a distribuição dos entrevistados por uf em relação ao sexo?**
+            **Gráfico 6: Como estão distribuidos os entrevistados por cidade e sexo, com comparação de percentual entre homens e mulheres?**
 
             Questionário: 
-
+            
             1. Qual o sexo do entrevistado?
+            
+            2. Em qual cidade mora o entrevistado?
 
-            2. Em qual uf reside o entrevistado?
 
             ------------------------------------------------------------------------------------------
 
-            **Qual a renda média dos entrevistados em relação a idade e situação de domicílio?**
+            **Gráfico 7: Qual a renda média dos entrevistados em relação a idade e situação de domicílio?**
 
             Questionário:
 
-            1. Qual o seu salário?
+            1. Qual o salário do entrevistado?
 
-            2. Qual a sua idade?
+            2. Qual a idade do entrevistado?
 
-            3. Situação do domicílio?
+            3. Situação de domicílio?
+
+            ------------------------------------------------------------------------------------------
+
+            **Gráfico 8: Qual o percentual de entrevistados que possuem plano de saúde, que utilizou pronto socorro do SUS/UPA e que utilizou hospital do SUS?**
+
+            Questionário:
+            
+            1. Tem algum plano de saúde médico, seja particular, de empresa ou de órgão público?
+            
+            2. Local que buscou atendimento foi pronto socorro do SUS/UPA?
+            
+            3. Local que buscou atendimento foi hospital do SUS?
 
             '''
-        if st.button(f"Carregar Gráficos { num } & { num+1 }", type="primary"):
+        if st.button(f"Carregar Gráficos { num }, { num+1 } & { num+2}", type="primary"):
             with st.spinner("Carregando o gráfico. Aguarde..."):
-                st.markdown('<iframe width="1100" height="680" src="https://app.powerbi.com/view?r=eyJrIjoiOWRmNmI5MjQtZmQ0OS00NzhjLTg5MTktZGQ0YjE0MDA2MmIyIiwidCI6IjgxYTI4ZjEwLWUxYTEtNGJmNi04N2FlLWY1MDQ1ZTE0NjBjMCJ9" frameborder="0" allowFullScreen="true"></iframe>',unsafe_allow_html=True)
+                st.markdown('<iframe width="1100" height="680" src="https://app.powerbi.com/view?r=eyJrIjoiNDZkY2RiNGMtYTczZi00MTIyLTk0ZWUtNDljOTdiZmI4MGM0IiwidCI6IjgxYTI4ZjEwLWUxYTEtNGJmNi04N2FlLWY1MDQ1ZTE0NjBjMCJ9" frameborder="0" allowFullScreen="true"></iframe>',unsafe_allow_html=True)
                 time.sleep(2)
+            
+            tab2_02_01, tab2_02_02, tab2_02_03 = st.tabs(["Gráfico 6","Gráfico 7","Gráfico 8"])
+            
+            with tab2_02_01:
+                '''
+                ### Análise
+
+                Analisando os dados notamos que a pesquisa nos três de meses que utilizamos de coleta se manteve 52% de homes entrevistados e 48% de mulheres olhando para a pesquisa como um todo.
+
+                Olhando para os maiores estados como Minas Gerais, São Paulo e Rio De Janeiro temos 25% dos entrevistados nesses estados.
+                
+                Analisando o grau de instrução Sergipe se destaca com o maior índice de entrevistados com o fundamental incompleto chegando a 42%, já o estado com o maior índice de formados entre fundamental, médio, superior e pôs graduação se destaca o Distrito Federal, podendo ser pela influência dos políticos que ali residem e seus familiares. 
+                '''
+            with tab2_02_02:
+                '''
+                ### Análise 
+
+                Podemos notar que em média após os 30 anos de uma forma geral temos um aumento considerável na renda média dos entrevistados que se mantem até em média 82 anos para os moradores de regiões urbanas, já para os moradores de regiões rurais temos um comportamento diferente onde notamos com média 25 anos temos esse aumento que se estende até 76 anos em média.
+                
+                Sobre o grau de escolaridade temos um padrão de quanto maior o grau de instrução maior a renda média.
+                '''
+            with tab2_02_03:
+                '''
+                ### Análise
+
+                Analisando o comportamento dos entrevistados apesar de 77 % não possuir plano de saúde temos em média 80% que buscaram hospitais e/ou clínicas particulares. 
+                
+                Comparando moradores de áreas urbanas e rurais, temos o seguinte cenário onde moradores de área urbanas que possuem plano de saúde são 27,4% e nas áreas rurais temos apenas 7,79% com plano de saúde.
+                '''
         st.divider()
         '''
         ### Taxa de desocupação por escolaridade
         '''
-        num+=2
+        num+=3
         with st.expander(f"Questão {num} (clique para expandir/retrair)", expanded=False):
             '''
             **Qual a relação entre taxa de desocupação e escolaridade da população da pesquisa?**
