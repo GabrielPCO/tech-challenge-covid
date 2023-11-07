@@ -25,16 +25,15 @@ st.set_page_config(
 # Função de cache dos gráficos
 @st.cache_data(show_spinner=False)
 def waitForResourceAvailable(src, wframe, hframe):
-    with st.spinner("Carregando o gráfico. Aguarde..."):
-        timer = 0
-        content = components.iframe(src, width = wframe, height = hframe, scrolling = False)
-        while not content:
-            time.sleep(1)
-            timer += 1
-            if timer > 10:
-                return st.markdown(f"**:red[Erro]**: Tempo de resposta esgotado! Acesse o gráfico no link: {src}")
-            if content:
-                return content
+    timer = 0
+    content = components.iframe(src, width = wframe, height = hframe, scrolling = False)
+    while not content:
+        time.sleep(1)
+        timer += 1
+        if timer > 10:
+            return st.markdown(f"**:red[Erro]**: Tempo de resposta esgotado! Acesse o gráfico no link: {src}")
+        if content:
+            return content
 
 # Titulo de Página
 st.title('Análise de dados: explorando dados da Pesquisa Nacional por Amostra de Domicílios (PNAD) COVID19')
@@ -355,7 +354,9 @@ with tab2:
                 ```
                 '''
         if st.button(f'Carregar Gráfico { num }', type='primary'):
-            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_1_população_Piramide_Etaria.html", 1000, 700)
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_1_população_Piramide_Etaria.html", 1000, 700)
+                time.sleep(2)
             '''
             ## Análise
 
@@ -408,7 +409,9 @@ with tab2:
                 ```
                 '''
         if st.button(f"Carregar Gráfico { num }", type="primary"):        
-            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/br_distribuicao_populacao.html", 700, 700)
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                waitForResourceAvailable("https://cryptohub.com.br/DataFrame/br_distribuicao_populacao.html", 700, 700)
+                time.sleep(2)
             '''
             
             ## Análise
@@ -477,7 +480,9 @@ with tab2:
                 ```
                 '''
         if st.button(f"Carregar Gráfico { num }", type="primary"):
-            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_2_populacao_Distribuição da população da pesquisa por região de moradia.html", 1200, 700)     
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_2_populacao_Distribuição da população da pesquisa por região de moradia.html", 1200, 700)     
+                time.sleep(3)
             '''
             ## Análise
 
@@ -544,7 +549,9 @@ with tab2:
                 ```
                 '''
         if st.button(f'Carregar gráfico { num }', type='primary'):
-            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_4_populacao_Distribuição da populacao da pesquisa por cor-raça.html", 1200, 700)
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_4_populacao_Distribuição da populacao da pesquisa por cor-raça.html", 1200, 700)
+                time.sleep(3)
             '''
             ### Análise
 
@@ -614,7 +621,9 @@ with tab2:
                 '''
 
         if st.button(f"Carregar Gráfico { num }", type="primary"):
-            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/br_faixa_aluguel.html", 700, 700)
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                waitForResourceAvailable("https://cryptohub.com.br/DataFrame/br_faixa_aluguel.html", 700, 700)
+                time.sleep(2)
             '''
             
             ## Análise
@@ -784,7 +793,9 @@ with tab2:
                 ```
                 '''
         if st.button(f"Carregar Gráfico {num}", type="primary"):
-            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_8_Relação entre escolaridade e taxa de desocupação.html", 1300, 600)
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_8_Relação entre escolaridade e taxa de desocupação.html", 1300, 600)
+                time.sleep(2)
             '''
             ### Análise
 
@@ -923,7 +934,9 @@ with tab2:
                 ```
                 '''
         if st.button(f"Carregar Gráfico {num}", type="primary"):
-            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_9_Variacaoo restricoes de distanciamento social.html", 1000, 500)
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_9_Variacaoo restricoes de distanciamento social.html", 1000, 500)
+                time.sleep(2)
             '''
             ### Análise
 
@@ -1006,7 +1019,9 @@ with tab2:
                 '''
 
         if st.button(f"Carregar Gráfico { num }", type="primary"):
-            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/br_mapa_casos_febre.html",700,800)      
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                waitForResourceAvailable("https://cryptohub.com.br/DataFrame/br_mapa_casos_febre.html",700,800)      
+                time.sleep(5)
             '''
             
             ## Análise
@@ -1093,7 +1108,9 @@ with tab2:
                 '''
 
         if st.button(f"Carregar Gráfico { num }", type="primary"):
-            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/br_porcentagem_casos.html", 700, 800)
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                waitForResourceAvailable("https://cryptohub.com.br/DataFrame/br_porcentagem_casos.html", 700, 800)
+                time.sleep(2)
             '''
             
             ## Análise
@@ -1159,7 +1176,9 @@ with tab2:
                 ```
                 '''
         if st.button(f"Carregar Gráfico { num }", type="primary"):
-            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_6_Procura de atendimento por entrevistados sintomaticos.html", 700, 600)
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_6_Procura de atendimento por entrevistados sintomaticos.html", 700, 600)
+                time.sleep(2)
             '''
             
             ## Análise
@@ -1239,7 +1258,9 @@ with tab2:
                 '''
 
         if st.button(f"Carregar Gráfico { num }", type="primary"):
-            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_7_Numero de internados de acordo com tipo de sintoma.html", 700, 600)
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_7_Numero de internados de acordo com tipo de sintoma.html", 700, 600)
+                time.sleep(2)
             '''
             
             ## Análise
@@ -1340,8 +1361,9 @@ with tab2:
                 ```
                 '''  
         if st.button(f"Carregar Gráfico {num}", type="primary"):
-            waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_14_Sintomaticos por setor de trabalho.html", 700, 400)
-
+            with st.spinner("Carregando o gráfico. Aguarde..."):
+                waitForResourceAvailable("https://cryptohub.com.br/DataFrame/questao_14_Sintomaticos por setor de trabalho.html", 700, 400)
+                time.sleep(2)
             '''
             ### Análise
 
